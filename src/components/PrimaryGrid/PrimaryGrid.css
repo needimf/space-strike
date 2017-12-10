@@ -1,0 +1,9 @@
+td {
+  width: 40px;
+  height: 40px;
+  border: black solid 2px;
+}
+
+.ship {
+  background-color: grey;
+}

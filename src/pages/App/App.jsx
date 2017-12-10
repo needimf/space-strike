@@ -49,13 +49,13 @@ class App extends Component {
       hasFired: false,
       gameOver: false,
       winner: null,
-      playerOneGrids: this.generateGameGrids(),
-      playerTwoGrids: this.generateGameGrids(),
+      playerOneGrids: this.generateGameGrids('One'),
+      playerTwoGrids: this.generateGameGrids('Two'),
     }
   }
 
   // State initialization methods
-  generateGameGrids = () => {
+  generateGameGrids = (player) => {
     let primaryGrid = new Array(10).fill(null);
     let trackingGrid = primaryGrid.slice();
 
@@ -71,13 +71,8 @@ class App extends Component {
     primaryGrid = buildOutGrid(primaryGrid, primaryGridCell);
     trackingGrid = buildOutGrid(trackingGrid, trackingGridCell);
 
-    return {primaryGrid, trackingGrid};
-  }
-
-  placeShipsForDevelopment = (player) => {
-    let primaryGrid = this.state[`player${player}Grids`].primaryGrid.map(row => row.map(cell => Object.assign({}, cell)));
-    let row = 0;
-
+    let row = player === 'One' ? 0 : 1;
+    
     for (let key in ships) {
       for (let i = 0; i < ships[key].length; i++) {
         primaryGrid[row][i].hasShip = true;
@@ -86,28 +81,26 @@ class App extends Component {
       row += 2;
     }
 
-    this.setState((prevState) => {
-      prevState[`player${player}Grids`].primaryGrid = primaryGrid
-    });
+    return {primaryGrid, trackingGrid};
   }
 
   // Event Listeners
 
 
   // Lifecycle Methods
-  componentDidMount() {
-    this.placeShipsForDevelopment('One');
-    this.placeShipsForDevelopment('Two');
-  }
-
   render() {
     return (
       <div className="App">
         <NavBar />
         <Switch>
           <Route exact path='/battle' render={(props) => 
-            <GameplayPage />
-            }
+            <GameplayPage 
+              playerOneTurn={this.state.playerOneTurn}
+              playerOneGrids={this.state.playerOneGrids}
+              playerTwoGrids={this.state.playerTwoGrids}
+              gameOver={this.state.gameOver}
+              winner={this.state.winner}
+            />}
           />
         </Switch>
       </div>
