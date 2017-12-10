@@ -3,15 +3,16 @@ const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+require('dotenv').config();
+
+require('./config/database');
 
 let app = express();
-
-// require('./config/database');
 
 app.use(logger('dev'));
 
 // Middleware
-app.use(favicon(path.join(__dirname, 'build', 'favivon.ico')));
+app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'build')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
