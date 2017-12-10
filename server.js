@@ -3,6 +3,7 @@ const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const http = require('http');
 require('dotenv').config();
 
 require('./config/database');
@@ -28,6 +29,17 @@ app.get('/*', (req, res) => {
 // development to avoid collision with React's dev server
 let port = process.env.PORT || 3001;
 
-app.listen(port, () => {
+// Store port in express
+app.set('port', port);
+
+// Create HTTP server
+const server = http.createServer(app);
+
+// Load and attach socket.io to http server
+const io = require('./io');
+io.attach(server);
+
+// Listen on provided port
+server.listen(port, () => {
   console.log(`Express app running on port ${port}`);
 });
