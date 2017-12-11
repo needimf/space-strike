@@ -4,25 +4,27 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
+import io from 'socket.io-client';
 import NavBar from './../../components/NavBar/NavBar';
 import GameplayPage from './../GameplayPage/GameplayPage';
 import WelcomePage from './../WelcomePage/WelcomePage';
+import WaitingRoomPage from './../WaitingRoomPage/WaitingRoomPage';
 
-class primaryGridCell {
-  constructor () {
-    this.hasShip = false;
-    this.ship = null;
-    this.hit = false;
-    this.miss = false;
-  }
-}
+// class primaryGridCell {
+//   constructor () {
+//     this.hasShip = false;
+//     this.ship = null;
+//     this.hit = false;
+//     this.miss = false;
+//   }
+// }
 
-class trackingGridCell {
-  constructor () {
-    this.isHit = false;
-    this.isMiss = false;
-  }
-}
+// class trackingGridCell {
+//   constructor () {
+//     this.isHit = false;
+//     this.isMiss = false;
+//   }
+// }
 
 const ships = {
   'Carrier': {
@@ -50,34 +52,40 @@ class App extends Component {
       hasFired: false,
       gameOver: false,
       winner: null,
-      playerOneGrids: this.generateGameGrids('One'),
-      playerTwoGrids: this.generateGameGrids('Two'),
-    }
+      playerGrids: this.generateGameGrids(),
+      opponentGrid: [],
+      socket: null
+    }       
+    // socket.on('get-opponent-grid', () => {
+    //   console.log('need to send grids')
+    //   socket.emit('initial-grid-send', {
+    //     grid: this.state.playerGrids.primaryGrid
+    //   });
+    // });
   }
 
   // State initialization methods
-  generateGameGrids = (player) => {
+  generateGameGrids = () => {
     let primaryGrid = new Array(10).fill(null);
     let trackingGrid = primaryGrid.slice();
 
-    function buildOutGrid(grid, cellType) {
+    function buildOutGrid(grid, defaultValue) {
       grid.forEach((row, rowIdx) => {
         row = new Array(10).fill(null);
-        row = row.map(() => new cellType());
+        row = row.map(() => defaultValue);
         grid[rowIdx] = row;
       })
       return grid;
     }
 
-    primaryGrid = buildOutGrid(primaryGrid, primaryGridCell);
-    trackingGrid = buildOutGrid(trackingGrid, trackingGridCell);
+    primaryGrid = buildOutGrid(primaryGrid, 0);
+    trackingGrid = buildOutGrid(trackingGrid, null);
 
-    let row = player === 'One' ? 0 : 1;
+    let row = 0;
     
     for (let key in ships) {
       for (let i = 0; i < ships[key].length; i++) {
-        primaryGrid[row][i].hasShip = true;
-        primaryGrid[row][i].ship = key;
+        primaryGrid[row][i] = ships[key].length;
       }
       row += 2;
     }
@@ -86,6 +94,13 @@ class App extends Component {
   }
 
   // Event Listeners
+  handleMultiplayerButton = () => {
+    this.setState({ socket: io() }, () => {
+      this.state.socket.emit('add-player-to-waiting-room');
+      this.props.history.push('/waiting-room');
+    })
+  }
+
   handleShot = (e) => {
     let player = this.state.playerOneTurn ? 'One' : 'Two';
     let row = parseInt(e.target.getAttribute('data-row'), 10);
@@ -115,23 +130,29 @@ class App extends Component {
 
 
   // Lifecycle Methods
+
   render() {
     return (
       <div className="App">
         <NavBar />
         <Switch>
           <Route exact path='/' render={(props) =>
-            <WelcomePage 
+            <WelcomePage
+              handleMultiplayerButton={this.handleMultiplayerButton} 
             />}
           />
           <Route exact path='/battle' render={(props) => 
             <GameplayPage 
-              playerOneTurn={this.state.playerOneTurn}
-              playerOneGrids={this.state.playerOneGrids}
-              playerTwoGrids={this.state.playerTwoGrids}
-              gameOver={this.state.gameOver}
-              winner={this.state.winner}
-              handleShot={this.handleShot}
+            playerOneTurn={this.state.playerOneTurn}
+            playerGrids={this.state.playerGrids}
+            gameOver={this.state.gameOver}
+            winner={this.state.winner}
+            handleShot={this.handleShot}
+            />}
+          />
+          <Route exact path='/waiting-room' render={(props) =>
+            <WaitingRoomPage
+              socket={this.state.socket}
             />}
           />
         </Switch>

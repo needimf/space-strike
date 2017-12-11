@@ -9,8 +9,7 @@ const GameplayPage = (props) => {
       </div>
       <GameScreen 
         playerOneTurn={props.playerOneTurn}
-        playerOneGrids={props.playerOneGrids}
-        playerTwoGrids={props.playerTwoGrids}
+        playerGrids={props.playerGrids}
         gameOver={props.gameOver}
         winner={props.winner}
         handleShot={props.handleShot}

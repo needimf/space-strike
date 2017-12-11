@@ -11,7 +11,7 @@ const TrackingGrid = (props) => {
           return (
             <td 
               key={`${index}${i}`}
-              className={`tracking-cell${cell.isHit ? ' hit' : ''}${cell.isMiss ? ' miss' : ''}`}
+              className={`tracking-cell${cell ? cell : ''}`}
               data-row={index}
               data-col={i}
               onClick={(e) => {props.handleShot(e)}}
