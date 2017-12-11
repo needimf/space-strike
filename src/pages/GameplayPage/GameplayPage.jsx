@@ -13,6 +13,7 @@ const GameplayPage = (props) => {
         playerTwoGrids={props.playerTwoGrids}
         gameOver={props.gameOver}
         winner={props.winner}
+        handleShot={props.handleShot}
       />
     </div>
   )

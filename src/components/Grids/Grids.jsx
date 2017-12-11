@@ -6,7 +6,10 @@ const Grids = (props) => {
   return (
     <div className="row">
       <PrimaryGrid grid={props.playerGrids.primaryGrid} />
-      <TrackingGrid grid={props.playerGrids.trackingGrid} />
+      <TrackingGrid 
+        grid={props.playerGrids.trackingGrid}
+        handleShot={props.handleShot}
+      />
     </div>
   );
 }

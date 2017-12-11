@@ -9,7 +9,13 @@ const TrackingGrid = (props) => {
        {
         row.map((cell, i) => {
           return (
-             <td key={`${index}${i}`} className={`${cell.isHit ? 'hit' : ''}${cell.isMiss ? 'miss' : ''}`}></td>
+            <td 
+              key={`${index}${i}`}
+              className={`tracking-cell${cell.isHit ? ' hit' : ''}${cell.isMiss ? ' miss' : ''}`}
+              data-row={index}
+              data-col={i}
+              onClick={(e) => {props.handleShot(e)}}
+            />
           );
         })
        }

@@ -9,7 +9,7 @@ const PrimaryGrid = (props) => {
        {
         row.map((cell, i) => {
           return (
-             <td key={`${index}${i}`} className={`${cell.hasShip ? 'ship' : ''}`}></td>
+             <td key={`${index}${i}`} className={`primary-cell${cell.hasShip ? ' ship' : ''}`}></td>
           );
         })
        }

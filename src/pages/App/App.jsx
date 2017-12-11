@@ -85,6 +85,32 @@ class App extends Component {
   }
 
   // Event Listeners
+  handleShot = (e) => {
+    let player = this.state.playerOneTurn ? 'One' : 'Two';
+    let row = parseInt(e.target.getAttribute('data-row'), 10);
+    let col = parseInt(e.target.getAttribute('data-col'), 10);
+    let opponentPrimaryGrid = this.state.playerOneTurn ? this.state.playerTwoGrids.primaryGrid : this.state.playerOneGrids.primaryGrid;
+    let hit = false;
+    let miss = false;
+    
+    opponentPrimaryGrid[row][col].hasShip ? hit = true : miss = true;
+
+    let trackingGridCopy = this.state[`player${player}Grids`].trackingGrid.map(row => row.map(cell => Object.assign({}, cell)));
+    trackingGridCopy[row][col].isHit = hit;
+    trackingGridCopy[row][col].isMiss = miss;
+
+    let playerOneTurn = this.state.playerOneTurn ? false : true;
+
+    this.setState((prevState) => {
+      return {
+        [`player${player}Grids`]: {
+          trackingGrid: trackingGridCopy,
+          primaryGrid: prevState[`player${player}Grids`].primaryGrid
+        },
+        playerOneTurn
+      }
+    });
+  }
 
 
   // Lifecycle Methods
@@ -101,6 +127,7 @@ class App extends Component {
                 playerTwoGrids={this.state.playerTwoGrids}
                 gameOver={this.state.gameOver}
                 winner={this.state.winner}
+                handleShot={this.handleShot}
               />}
             />
           </Switch>

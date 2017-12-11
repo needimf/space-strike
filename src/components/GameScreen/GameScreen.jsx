@@ -5,6 +5,7 @@ const GameScreen = (props) => {
   return (
       <Grids 
         playerGrids={(props.playerOneTurn ? props.playerOneGrids : props.playerTwoGrids)}
+        handleShot={props.handleShot}
       />
   );
 }
