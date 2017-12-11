@@ -1,0 +1,13 @@
+td {
+  width: 40px;
+  height: 40px;
+  border: black solid 2px;
+}
+
+.hit {
+  background-color: red;
+}
+
+.miss {
+  background-color: blue;
+}

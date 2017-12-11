@@ -92,17 +92,19 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar />
-        <Switch>
-          <Route exact path='/battle' render={(props) => 
-            <GameplayPage 
-              playerOneTurn={this.state.playerOneTurn}
-              playerOneGrids={this.state.playerOneGrids}
-              playerTwoGrids={this.state.playerTwoGrids}
-              gameOver={this.state.gameOver}
-              winner={this.state.winner}
-            />}
-          />
-        </Switch>
+        <div className="container">
+          <Switch>
+            <Route exact path='/battle' render={(props) => 
+              <GameplayPage 
+                playerOneTurn={this.state.playerOneTurn}
+                playerOneGrids={this.state.playerOneGrids}
+                playerTwoGrids={this.state.playerTwoGrids}
+                gameOver={this.state.gameOver}
+                winner={this.state.winner}
+              />}
+            />
+          </Switch>
+        </div>
       </div>
     );
   }

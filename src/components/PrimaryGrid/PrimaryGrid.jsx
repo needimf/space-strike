@@ -18,7 +18,7 @@ const PrimaryGrid = (props) => {
   });
 
   return(
-    <div>
+    <div className="col-6">
       <table>
         <tbody>
           {tableBody}
