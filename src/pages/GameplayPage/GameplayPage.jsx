@@ -3,7 +3,7 @@ import GameScreen from './../../components/GameScreen/GameScreen';
 
 const GameplayPage = (props) => {
   return (
-    <div>
+    <div className="container">
       <div className="row">
         <h1>Gameplay Screen</h1>
       </div>

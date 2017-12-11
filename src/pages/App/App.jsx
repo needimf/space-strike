@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import NavBar from './../../components/NavBar/NavBar';
 import GameplayPage from './../GameplayPage/GameplayPage';
+import WelcomePage from './../WelcomePage/WelcomePage';
 
 class primaryGridCell {
   constructor () {
@@ -118,20 +119,22 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar />
-        <div className="container">
-          <Switch>
-            <Route exact path='/battle' render={(props) => 
-              <GameplayPage 
-                playerOneTurn={this.state.playerOneTurn}
-                playerOneGrids={this.state.playerOneGrids}
-                playerTwoGrids={this.state.playerTwoGrids}
-                gameOver={this.state.gameOver}
-                winner={this.state.winner}
-                handleShot={this.handleShot}
-              />}
-            />
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact path='/' render={(props) =>
+            <WelcomePage 
+            />}
+          />
+          <Route exact path='/battle' render={(props) => 
+            <GameplayPage 
+              playerOneTurn={this.state.playerOneTurn}
+              playerOneGrids={this.state.playerOneGrids}
+              playerTwoGrids={this.state.playerTwoGrids}
+              gameOver={this.state.gameOver}
+              winner={this.state.winner}
+              handleShot={this.handleShot}
+            />}
+          />
+        </Switch>
       </div>
     );
   }
