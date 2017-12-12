@@ -6,10 +6,10 @@ class GameplayPage extends Component {
   constructor(props) {
     super(props);
     this.state = {}
-    this.socket = io();
-    this.socket.on('connect', () => {
-      this.socket.emit('add user to list', {user: this.props.user});
-    });
+    this.socket = io('http://localhost:3000/', { query: `user=${JSON.stringify(this.props.user)}` });
+    // this.socket.on('connect', () => {
+    //   this.socket.emit('add user to list', {user: this.props.user});
+    // });
     this.socket.on('added', (data) => {
       console.log(data);
     })
