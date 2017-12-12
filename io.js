@@ -47,7 +47,12 @@ function pairWaitingPlayers() {
     players[1].leave('waiting room');
     players[0].join(`game ${game.id}`);
     players[1].join(`game ${game.id}`);
-    
+
+    // Seed ships for development
+    game.placeShipsForDevelopment(1);
+    game.placeShipsForDevelopment(2);
+
+    // emit join game to both players
     io.to(`game ${game.id}`).emit('join', game);
 
     // store game in users
