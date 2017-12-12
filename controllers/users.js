@@ -19,7 +19,17 @@ function signup(req, res) {
 }
 
 function login(req, res) {
-
+  User.findOne({email: req.body.email}).exec().then(user => {
+    if (!user) return res.status(401).json({err: 'Invalid credentials'});
+    user.comparePassword(req.body.password, (err, isMatch) => {
+      if (isMatch) {
+        let token = createJWT(user);
+        res.json({token});
+      } else {
+        return res.status(401).json({err: 'Invalid credentials'});
+      }
+    });
+  }).catch(err => res.status(401).json(err));
 }
 
 /*----- Helper Functions -----*/

@@ -11,6 +11,7 @@ import GameplayPage from './../GameplayPage/GameplayPage';
 import WelcomePage from './../WelcomePage/WelcomePage';
 import WaitingRoomPage from './../WaitingRoomPage/WaitingRoomPage';
 import SignupPage from './../SignupPage/SignupPage';
+import LoginPage from './../LoginPage/LoginPage';
 
 class App extends Component {
   constructor(props) {
@@ -36,6 +37,10 @@ class App extends Component {
   handleLogout = () => {
     userService.logout();
     this.setState({user: null});
+  }
+
+  handleLogin = () => {
+    this.setState({user: userService.getUser()});
   }
 
   handleMultiplayerButton = () => {
@@ -66,6 +71,12 @@ class App extends Component {
               {...props}
               handleSignup={this.handleSignup}
             />}
+          />
+          <Route exact path='/login' render={(props) => 
+              <LoginPage
+                {...props}
+                handleLogin={this.handleLogin}
+              />}
           />
           <Route exact path='/battle' render={(props) => 
             <GameplayPage 

@@ -14,8 +14,14 @@ function logout() {
   tokenService.removeToken();
 }
 
+function login(user) {
+  return userAPI.login(user)
+    .then(token => tokenService.setToken(token));
+}
+
 export default {
   signup,
   getUser,
-  logout
+  logout,
+  login
 }
