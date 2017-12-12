@@ -19,6 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // API routes
+app.use('/api/users', require('./routes/api/users'));
 
 // Client-side catch all route
 app.get('/*', (req, res) => {

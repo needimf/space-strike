@@ -8,6 +8,7 @@ import NavBar from './../../components/NavBar/NavBar';
 import GameplayPage from './../GameplayPage/GameplayPage';
 import WelcomePage from './../WelcomePage/WelcomePage';
 import WaitingRoomPage from './../WaitingRoomPage/WaitingRoomPage';
+import SignupPage from './../SignupPage/SignupPage';
 
 class App extends Component {
   constructor(props) {
@@ -25,12 +26,16 @@ class App extends Component {
   // State initialization methods
 
   
-  // Event Listeners
+  /*---------- Callback Methods ----------*/
+  handleSignup = () => {
+    
+  }
+
   handleMultiplayerButton = () => {
     this.props.history.push('/waiting-room');
   }
     
-  // Lifecycle Methods  
+  /*---------- Lifecycle Methods ----------*/
   render() {
     return (
       <div className="App">
@@ -40,7 +45,13 @@ class App extends Component {
             <WelcomePage
               handleMultiplayerButton={this.handleMultiplayerButton} 
             />}
-            />
+          />
+          <Route exact path='/signup' render={(props) => 
+            <SignupPage 
+              {...props}
+              handleSignup={this.handleSignup}
+            />}
+          />
           <Route exact path='/battle' render={(props) => 
             <GameplayPage 
               playerOneTurn={this.state.playerOneTurn}
