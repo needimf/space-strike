@@ -33,6 +33,11 @@ class App extends Component {
     this.setState({user: userService.getUser()});
   }
 
+  handleLogout = () => {
+    userService.logout();
+    this.setState({user: null});
+  }
+
   handleMultiplayerButton = () => {
     this.props.history.push('/waiting-room');
   }
@@ -46,7 +51,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <NavBar />
+        <NavBar 
+          user={this.state.user}
+          handleLogout={this.handleLogout}
+        />
         <Switch>
           <Route exact path='/' render={(props) =>
             <WelcomePage
