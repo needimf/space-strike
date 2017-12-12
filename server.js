@@ -29,17 +29,10 @@ app.get('/*', (req, res) => {
 // development to avoid collision with React's dev server
 let port = process.env.PORT || 3001;
 
-// Store port in express
-app.set('port', port);
-
-// Create HTTP server
-const server = http.createServer(app);
-
-// Load and attach socket.io to http server
-const io = require('./io');
-io.attach(server);
-
 // Listen on provided port
-server.listen(port, () => {
+const server = app.listen(port, (err) => {
   console.log(`Express app running on port ${port}`);
 });
+
+// Load and connect socket.io
+require('./io')(server);

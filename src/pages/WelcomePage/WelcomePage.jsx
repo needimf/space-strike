@@ -9,9 +9,6 @@ let styles = {
   }
 }
 class WelcomePage extends Component {
-  constructor(props) {
-    super(props);
-  }
   
   // Lifecycle Methods
   componentWillMount() {

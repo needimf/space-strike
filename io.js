@@ -1,33 +1,22 @@
-const io = require('socket.io')();
+function connectIo(server) {
 
-io.on('connection', (socket) => {
-  console.log('connected')
-  if (io.engine.clientsCount === 2) {
-    console.log('2 players')
-    io.emit('get-opponent-grid')
-  }
+  const io = require('socket.io')(server);
+  
+  let players = {}
 
-  socket.on('get-players-in-waiting-room', () => {
-    console.log('I like coconuts');
+  io.on('connection', (socket) => {
+    console.log('connected')
+    socket.on('add-player-to-list', (player) => {
+      players[socket.id] = player;
+      console.log(players)
+      io.sockets.emit('players-currently-in-list', {players})
+    })
+
+    socket.on('disconnect', () => {
+      delete players[socket.id];
+      io.sockets.emit('players-currently-in-list', {players});    
+    })
   })
-  socket.on('initial-grid-send', (data) => {
-    console.log(data)
-  })
-  socket.on('disconnect', () => {
-    console.log('disconnected')
-  })
-})
+}
 
-// const battle = io.of('/battle');
-// const battleRoomNo = 1;
-// battle.on('connection', (socket) => {
-
-//   // Create new room if two players are in a room
-//   if(io.nsps['/battle'].adapter.rooms[`room-${battleRoomNo}`] && io.nsps['/battle'].adapter.rooms[`room-${battleRoomNo}`].length > 1) battleRoomNo++;
-//   socket.join(`room-${battleRoomNo}`);
-
-//   if(io.nsps['/battle'].adapter.rooms)
-// })
-
-
-module.exports = io;
+module.exports = connectIo;
