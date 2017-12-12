@@ -3,44 +3,25 @@ import {Link} from 'react-router-dom';
 
 const NavBar = (props) => {
   let userNav = props.user ?
-    <div className="collapse navbar-collapse" id="navbarCollapse">
-      <ul className="navbar-nav mr-auto">
-        <li className="nav-item active">
-          <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="" onClick={props.handleLogout} >Logout</Link>
-        </li>
-        <li className="nav-item">
-          <span>WELCOME, {props.user.firstName}</span>
-        </li>
-      </ul>
-    </div>
+    <ul id="nav-mobile" className="left hide-on-med-and-down">
+      <li><span>WELCOME, {props.user.firstName}</span></li>
+      <li><Link to="" onClick={props.handleLogout} >Logout</Link></li>
+    </ul>
     :
-    <div className="collapse navbar-collapse" id="navbarCollapse">
-      <ul className="navbar-nav mr-auto">
-        <li className="nav-item active">
-          <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/login">Login</Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/signup">Sign Up</Link>
-        </li>
-      </ul>
-    </div>
+    <ul id="nav-mobile" className="left hide-on-med-and-down">
+      <li><Link to="/login" >Login</Link></li>
+      <li><Link to="/signup" >Sign Up</Link></li>
+    </ul>
 
   return (
-    <div>
-      <nav className="navbar navbar-expand-md navbar-dark sticky-top bg-dark">
-        <Link className="navbar-brand" to="/">Space Strike</Link>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
+    <nav>
+      <div className="container">
+      <div className="nav-wrapper">
+        <Link className="brand-logo right" to="/">Space Strike</Link>
         {userNav}
-      </nav>
-    </div>
+      </div>
+      </div>
+    </nav>
   );
 }
 

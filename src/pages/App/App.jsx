@@ -56,41 +56,46 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <NavBar 
-          user={this.state.user}
-          handleLogout={this.handleLogout}
-        />
-        <Switch>
-          <Route exact path='/' render={(props) =>
-            <WelcomePage
-              handleMultiplayerButton={this.handleMultiplayerButton} 
-            />}
+        <header>
+          <NavBar 
+            user={this.state.user}
+            handleLogout={this.handleLogout}
           />
-          <Route exact path='/signup' render={(props) => 
-            <SignupPage 
-              {...props}
-              handleSignup={this.handleSignup}
-            />}
-          />
-          <Route exact path='/login' render={(props) => 
-              <LoginPage
-                {...props}
-                handleLogin={this.handleLogin}
+        </header>
+        <main>
+          <Switch>
+            <Route exact path='/' render={(props) =>
+              <WelcomePage
+                handleMultiplayerButton={this.handleMultiplayerButton} 
               />}
-          />
-          <Route exact path='/battle' render={(props) => 
-            <GameplayPage 
-              playerOneTurn={this.state.playerOneTurn}
-              playerGrids={this.state.playerGrids}
-              gameOver={this.state.gameOver}
-              winner={this.state.winner}
-              handleShot={this.handleShot}
-            />}
             />
-          <Route exact path='/waiting-room' render={(props) =>
-            <WaitingRoomPage />}
-          />
-        </Switch>
+            <Route exact path='/signup' render={(props) => 
+              <SignupPage 
+                {...props}
+                handleSignup={this.handleSignup}
+              />}
+            />
+            <Route exact path='/login' render={(props) => 
+                <LoginPage
+                  {...props}
+                  handleLogin={this.handleLogin}
+                />}
+            />
+            <Route exact path='/battle' render={(props) => 
+              <GameplayPage 
+                playerOneTurn={this.state.playerOneTurn}
+                playerGrids={this.state.playerGrids}
+                gameOver={this.state.gameOver}
+                winner={this.state.winner}
+                handleShot={this.handleShot}
+              />}
+              />
+            <Route exact path='/waiting-room' render={(props) =>
+              <WaitingRoomPage />}
+            />
+          </Switch>
+        </main>
+        <footer></footer>
       </div>
     );
   }
