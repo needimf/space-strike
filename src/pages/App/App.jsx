@@ -4,6 +4,8 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
+import userService from './../../utils/userService';
+
 import NavBar from './../../components/NavBar/NavBar';
 import GameplayPage from './../GameplayPage/GameplayPage';
 import WelcomePage from './../WelcomePage/WelcomePage';
@@ -28,7 +30,7 @@ class App extends Component {
   
   /*---------- Callback Methods ----------*/
   handleSignup = () => {
-    
+    this.setState({user: userService.getUser()});
   }
 
   handleMultiplayerButton = () => {
@@ -36,6 +38,11 @@ class App extends Component {
   }
     
   /*---------- Lifecycle Methods ----------*/
+  componentDidMount() {
+    let user = userService.getUser();
+    this.setState({user});
+  }
+
   render() {
     return (
       <div className="App">

@@ -13,7 +13,9 @@ function signup(req, res) {
     .then(user => {
       res.json({token: createJWT(user)});
     })
-    .catch(err => res.status(400).json(err));
+    // User data invalid (probably a duplicate email)
+    .catch(err => {
+      return res.status(400).json(err)});
 }
 
 function login(req, res) {

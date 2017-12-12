@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import userService from '../../utils/userService';
+
 
 class SignupForm extends Component {
   constructor(props) {
@@ -22,7 +24,15 @@ class SignupForm extends Component {
   }
 
   handleSubmit = (e) => {
-    
+    e.preventDefault();
+    userService.signup(this.state)
+      // successfully signed up - go back to welcomePage
+      .then(() => {
+        this.props.handleSignup();
+        this.props.history.push('/');
+      })
+      // invalid user data
+      .catch(err => this.props.updateMessage(err.message));
   }
 
   isFormInvalid() {

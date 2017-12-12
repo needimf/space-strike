@@ -10,9 +10,9 @@ let userSchema = new Schema(
     lastName: String,
     email: {type: String, required: true, lowercase: true, unique: true},
     password: String,
-    wins: Number,
-    totalGames: Number,
-    currentGame: {type: Schema.Types.ObjectId, ref: 'Game'}
+    wins: {type: Number, default: 0},
+    totalGames: {type: Number, default: 0},
+    currentGame: {type: Schema.Types.ObjectId, ref: 'Game', default: null}
   },
   {
     timestamps: true
@@ -27,13 +27,13 @@ userSchema.set('toJSON', {
 });
 
 userSchema.pre('save', function(next) {
+  let user = this;
   if (!user.isModified('password')) return next();
-  bcrypt.hash(user.password, SALT_ROUNDS, (err, hash) => {
+  bcrypt.hash(user.password, SALT_ROUNDS, function(err, hash) {
     if (err) return next(err);
-
-    this.password = hash;
+    user.password = hash;
     next();
-  })
-})
+  });
+});
 
 module.exports = mongoose.model('User', userSchema);
