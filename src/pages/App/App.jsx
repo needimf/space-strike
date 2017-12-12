@@ -66,7 +66,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/' render={(props) =>
               <WelcomePage
-                handleMultiplayerButton={this.handleMultiplayerButton} 
+                // handleMultiplayerButton={this.handleMultiplayerButton} 
               />}
             />
             <Route exact path='/signup' render={(props) => 
@@ -88,11 +88,12 @@ class App extends Component {
                 gameOver={this.state.gameOver}
                 winner={this.state.winner}
                 handleShot={this.handleShot}
+                user={this.state.user}
               />}
               />
-            <Route exact path='/waiting-room' render={(props) =>
+            {/* <Route exact path='/waiting-room' render={(props) =>
               <WaitingRoomPage />}
-            />
+            /> */}
           </Switch>
         </main>
         <footer></footer>

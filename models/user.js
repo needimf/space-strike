@@ -12,7 +12,7 @@ let userSchema = new Schema(
     password: String,
     wins: {type: Number, default: 0},
     totalGames: {type: Number, default: 0},
-    currentGame: {type: Schema.Types.ObjectId, ref: 'Game', default: null}
+    currentGame: {type: Schema.Types.ObjectId, ref: 'Game', default: null},
   },
   {
     timestamps: true

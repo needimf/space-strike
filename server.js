@@ -35,5 +35,5 @@ const server = app.listen(port, (err) => {
   console.log(`Express app running on port ${port}`);
 });
 
-// Load and connect socket.io
-require('./io')(server);
+// Load and connect socket to server
+require('./io').attach(server);

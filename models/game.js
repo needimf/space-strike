@@ -13,8 +13,8 @@ const gameSchema = new Schema(
       primaryGrid: [],
       trackingGrid: []
     },
-    gameOver: Boolean,
-    winner: {type: Schema.Types.ObjectId, ref: 'User'},
+    gameOver: {type: Boolean, default: false},
+    winner: {type: Schema.Types.ObjectId, ref: 'User', default: null},
   },
   {
     timestamps: true

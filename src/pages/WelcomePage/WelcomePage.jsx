@@ -33,10 +33,10 @@ class WelcomePage extends Component {
         </div>
         <div className ="row">
           <div className="col s6">
-            <button className="btn">Solo</button>
+            <Link className="btn" to="/battle">Play Game</Link>
           </div>
           <div className="col s6">
-            <button className="btn" onClick={() => this.props.handleMultiplayerButton()}>Multiplayer</button>
+            {/* <button className="btn" onClick={() => this.props.handleMultiplayerButton()}>Multiplayer</button> */}
           </div>
         </div>
       </div>
