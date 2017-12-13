@@ -27,12 +27,27 @@ class GameplayPage extends Component {
     this.socket.on('join', (data) => {
       this.handleGameJoin(data);
     });
+    this.socket.on('update game state', (data) =>{
+      this.handleGameUpdate(data);
+    })
   }
 
+  // Event Handlers
   handleGameJoin = (gameState) => {
     this.setState({game: gameState});
   }
 
+  handleGameUpdate = (gameState) => {
+    this.setState({game: gameState});
+  }
+
+  handleTorpedoFire = (e) => {
+    let row = parseInt(e.target.getAttribute('data-row'), 10);
+    let col = parseInt(e.target.getAttribute('data-col'), 10);
+    this.socket.emit('torpedo fire', {row, col} );
+  }
+
+  // Lifecycle methods
   componentWillUnmount() {
     this.socket.close();
   }
@@ -52,6 +67,7 @@ class GameplayPage extends Component {
           game={this.state.game}
           socket={this.socket}
           user={this.props.user}
+          handleTorpedoFire={this.handleTorpedoFire}
         />
       </div>
     )

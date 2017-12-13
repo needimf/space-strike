@@ -8,6 +8,7 @@ const Grids = (props) => {
       <PrimaryGrid grid={props.myGrids.primaryGrid} />
       <TrackingGrid 
         grid={props.myGrids.trackingGrid}
+        handleTorpedoFire={props.handleTorpedoFire}
       />
     </div>
   );

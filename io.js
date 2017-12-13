@@ -22,6 +22,35 @@ io.on('connection', (socket) => {
     delete users[socket.id];
   });
 
+  // handle torpedo fire
+  socket.on('torpedo fire', ({row, col}) => {
+    let game = users[socket.id].currentGame,
+      shootingPlayer,
+      opponent;
+    
+    if (users[socket.id]._id === game.player1.id) {
+      shootingPlayer = game.player1;
+      opponent = game.player2;
+    } else {
+      shootingPlayer = game.player2;
+      opponent = game.player1;
+    }
+
+    if (game) {
+      if (game.currentTurn === shootingPlayer.turnNo) {
+        if (opponent.grids.primaryGrid[row][col].ship) {
+          opponent.grids.primaryGrid[row][col].hit = true;
+          shootingPlayer.grids.trackingGrid[row][col] = 'hit';
+        } else {
+          shootingPlayer.grids.trackingGrid[row][col] = 'miss';
+        }
+      }
+    }
+    game.currentTurn ? game.currentTurn = 0 : game.currentTurn = 1;
+
+    io.to(`game ${game.id}`).emit('update game state', game);
+  })
+
   // create games for players in waiting room
   pairWaitingPlayers();
 });
@@ -56,8 +85,8 @@ function pairWaitingPlayers() {
     io.to(`game ${game.id}`).emit('join', game);
 
     // store game in users
-    users[players[0].id] = Object.assign({}, users[players[0].id], {currentGame: game});
-    users[players[1].id] = Object.assign({}, users[players[1].id], {currentGame: game});
+    users[players[0].id].currentGame = game;
+    users[players[1].id].currentGame = game;
 
     console.log(`${new Date().toISOString()} ${JSON.stringify(users[players[0].id].firstName)} and ${JSON.stringify(users[players[1].id].firstName)} have joined game ID ${game.id}`);
   }

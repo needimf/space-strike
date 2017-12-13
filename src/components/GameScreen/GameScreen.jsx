@@ -7,6 +7,7 @@ const GameScreen = (props) => {
         myGrids={props.myPlayerData.grids}
         game={props.game}
         user={props.user}
+        handleTorpedoFire={props.handleTorpedoFire}
       />
   );
 }

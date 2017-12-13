@@ -7,15 +7,15 @@ class Game {
       id: player1,
       grids: this.generateGameGrids(),
       ships: {},
-      turn: 0
+      turnNo: 0
     };
     this.player2 = {
       id: player2,
       grids: this.generateGameGrids(),
       ships: {},
-      turn: 1
+      turnNo: 1
     };
-    this.turn = Math.floor(Math.random() * 2);
+    this.currentTurn = Math.floor(Math.random() * 2);
     this.gameOver = false;
     this.winner = null;
     this.shipTypes = {

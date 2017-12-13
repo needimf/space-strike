@@ -11,9 +11,10 @@ const TrackingGrid = (props) => {
           return (
             <td 
               key={`${index}${i}`}
-              className={`tracking-cell${cell ? cell : ''}`}
+              className={`tracking-cell${cell ? ` ${cell}` : ''}`}
               data-row={index}
               data-col={i}
+              onClick={(e) => (props.handleTorpedoFire(e))}
             />
           );
         })
