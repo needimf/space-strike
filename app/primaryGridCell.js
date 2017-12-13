@@ -4,6 +4,7 @@ class PrimaryGridCell {
     this.hit = false;
     this.miss = false;
     this.sunk = false;
+    this.targeted = false;
   }
 }
 

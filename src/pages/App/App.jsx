@@ -7,7 +7,7 @@ import {
 import userService from './../../utils/userService';
 
 import NavBar from './../../components/NavBar/NavBar';
-import GameplayPage from './../GameplayPage/GameplayPage';
+import GamePage from './../GamePage/GamePage';
 import WelcomePage from './../WelcomePage/WelcomePage';
 import WaitingRoomPage from './../WaitingRoomPage/WaitingRoomPage';
 import SignupPage from './../SignupPage/SignupPage';
@@ -17,12 +17,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      playerOneTurn: true,
-      hasFired: false,
-      gameOver: false,
-      winner: null,
-      playerGrids: {},
-      opponentGrid: [],
+      user: {}
     };
   }
   
@@ -45,6 +40,10 @@ class App extends Component {
 
   handleMultiplayerButton = () => {
     this.props.history.push('/waiting-room');
+  }
+
+  handleUserGameJoin = (gameId) => {
+    this.setState(prevState => prevState.user.currentGame = gameId);
   }
     
   /*---------- Lifecycle Methods ----------*/
@@ -82,13 +81,14 @@ class App extends Component {
                 />}
             />
             <Route exact path='/battle' render={(props) => 
-              <GameplayPage 
+              <GamePage 
                 playerOneTurn={this.state.playerOneTurn}
                 playerGrids={this.state.playerGrids}
                 gameOver={this.state.gameOver}
                 winner={this.state.winner}
                 handleShot={this.handleShot}
                 user={this.state.user}
+                handleUserGameJoin={this.handleUserGameJoin}
               />}
               />
             {/* <Route exact path='/waiting-room' render={(props) =>

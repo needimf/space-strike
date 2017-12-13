@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import GameScreen from './../../components/GameScreen/GameScreen';
 const io = require('socket.io-client');
 
-class GameplayPage extends Component {
+class GamePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,7 +34,9 @@ class GameplayPage extends Component {
 
   // Event Handlers
   handleGameJoin = (gameState) => {
-    this.setState({game: gameState});
+    this.setState({game: gameState}, () => {
+      this.props.handleUserGameJoin(this.state.game.id);
+    });
   }
 
   handleGameUpdate = (gameState) => {
@@ -74,4 +76,4 @@ class GameplayPage extends Component {
   }
 }
 
-export default GameplayPage;
+export default GamePage;

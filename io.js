@@ -22,7 +22,7 @@ io.on('connection', (socket) => {
     delete users[socket.id];
   });
 
-  // handle torpedo fire
+  // Handle torpedo fire
   socket.on('torpedo fire', ({row, col}) => {
     let game = users[socket.id].currentGame,
       shootingPlayer,
@@ -36,19 +36,24 @@ io.on('connection', (socket) => {
       opponent = game.player1;
     }
 
+    // Check if the game actually exists
     if (game) {
+      // Check if it is the shooting player's turn
       if (game.currentTurn === shootingPlayer.turnNo) {
-        if (opponent.grids.primaryGrid[row][col].ship) {
-          opponent.grids.primaryGrid[row][col].hit = true;
-          shootingPlayer.grids.trackingGrid[row][col] = 'hit';
-        } else {
-          shootingPlayer.grids.trackingGrid[row][col] = 'miss';
+        // Submit the shooting players shot
+        if (game.fireTorpedo(row, col)) {
+          // Shot was valid, check for a winner
+          if (game.checkForWinner()) {
+            game.gameOver = true;
+            game.winner = shootingPlayer.id;
+          }
+          // switch current turn and send game state to both players
+          game.currentTurn ? game.currentTurn = 0 : game.currentTurn = 1;
+          io.to(`game ${game.id}`).emit('update game state', game);
         }
       }
     }
-    game.currentTurn ? game.currentTurn = 0 : game.currentTurn = 1;
 
-    io.to(`game ${game.id}`).emit('update game state', game);
   })
 
   // create games for players in waiting room
