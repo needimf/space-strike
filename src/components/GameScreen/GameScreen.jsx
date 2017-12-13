@@ -1,13 +1,18 @@
 import React from 'react';
-import Grids from './../Grids/Grids';
+import GamePanels from './../GamePanels/GamePanels';
 
 const GameScreen = (props) => {
   return (
-      <Grids 
-        myGrids={props.myPlayerData.grids}
+      <GamePanels 
+        myGameData={props.myGameData}
         game={props.game}
         user={props.user}
         handleTorpedoFire={props.handleTorpedoFire}
+        handleShipPlacement={props.handleShipPlacement}
+        handleShipSelection={props.handleShipSelection}
+        handleOrientationChange={props.handleOrientationChange}
+        selectedShip={props.selectedShip}
+        orientation={props.orientation}
       />
   );
 }

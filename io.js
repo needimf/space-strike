@@ -56,6 +56,19 @@ io.on('connection', (socket) => {
 
   })
 
+  // Handle ship placement
+  socket.on('place a ship', ({shipName, orientation, row, col, player}) => {
+    let game = users[socket.id].currentGame;
+    
+    // Check if the player is who they say they are
+    if (users[socket.id]._id === game[player].id) {
+      if (game.handleShipPlacement(shipName, orientation, row, col, player)) {
+        game.gameStatus = 'battle'
+      }
+      io.to(`game ${game.id}`).emit('update game state', game);
+    }
+  });
+
   // create games for players in waiting room
   pairWaitingPlayers();
 });
@@ -83,8 +96,8 @@ function pairWaitingPlayers() {
     players[1].join(`game ${game.id}`);
 
     // Seed ships for development
-    game.placeShipsForDevelopment(1);
-    game.placeShipsForDevelopment(2);
+    // game.placeShipsForDevelopment(1);
+    // game.placeShipsForDevelopment(2);
 
     // emit join game to both players
     io.to(`game ${game.id}`).emit('join', game);

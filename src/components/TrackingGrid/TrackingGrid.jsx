@@ -3,18 +3,18 @@ import './TrackingGrid.css'
 
 const TrackingGrid = (props) => {
   let tableBody = props.grid.slice()
-  tableBody = tableBody.map((row, index) => {
+  tableBody = tableBody.map((row, rowIdx) => {
     return (
-      <tr key={index}>
+      <tr key={rowIdx}>
        {
-        row.map((cell, i) => {
+        row.map((cell, colIdx) => {
           return (
             <td 
-              key={`${index}${i}`}
+              key={`${rowIdx}${colIdx}`}
               className={`tracking-cell${cell ? ` ${cell}` : ''}`}
-              data-row={index}
-              data-col={i}
-              onClick={(e) => (props.handleTorpedoFire(e))}
+              data-row={rowIdx}
+              data-col={colIdx}
+              onClick={() => props.handleTorpedoFire(rowIdx, colIdx)}
             />
           );
         })

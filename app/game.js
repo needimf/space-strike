@@ -7,17 +7,20 @@ class Game {
       id: player1,
       grids: this.generateGameGrids(),
       ships: {},
-      turnNo: 0
+      turnNo: 0,
+      placedShips: [] 
     };
     this.player2 = {
       id: player2,
       grids: this.generateGameGrids(),
       ships: {},
-      turnNo: 1
+      turnNo: 1,
+      placedShips: []
     };
     this.currentTurn = Math.floor(Math.random() * 2);
     this.gameOver = false;
     this.winner = null;
+    this.gameStatus = 'begin';
     this.shipTypes = {
       'Carrier': {
         length: 5
@@ -76,6 +79,24 @@ class Game {
       row += 2;
     }
   }
+
+  handleShipPlacement(shipName, orientation, row, col, player) {
+    if (shipName) {
+      let length = this.shipTypes[shipName].length;
+
+      while (length > 0) {
+        this[player].grids.primaryGrid[row][col].ship = shipName;
+        orientation === 'horizontal' ? col += 1 : row += 1;
+        length -= 1;
+      }
+
+      this[player].ships[shipName] = { hits: 0, sunk: false };
+      this[player].placedShips.push(shipName);
+
+      return (this.player1.placedShips.length === 5 && this.player2.placedShips.length === 5);
+    }
+  }
+  
 
   fireTorpedo(row, col) {
     let shootingPlayer,

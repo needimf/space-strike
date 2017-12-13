@@ -3,13 +3,17 @@ import './PrimaryGrid.css';
 
 const PrimaryGrid = (props) => {
   let tableBody = props.grid.slice()
-  tableBody = tableBody.map((row, index) => {
+  tableBody = tableBody.map((row, rowIdx) => {
     return (
-      <tr key={index}>
+      <tr key={rowIdx}>
        {
-        row.map((cell, i) => {
+        row.map((cell, colIdx) => {
           return (
-             <td key={`${index}${i}`} className={`primary-cell${cell.ship ? ' ship' : ''}`}></td>
+             <td 
+              key={`${rowIdx}${colIdx}`}
+              className={`primary-cell${cell.ship ? ' ship' : ''}`}
+              onClick={props.handleShipPlacement ? () => props.handleShipPlacement(props.selectedShip, props.orientation, rowIdx, colIdx) : ''}
+            ></td>
           );
         })
        }

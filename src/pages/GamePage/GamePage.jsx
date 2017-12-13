@@ -22,7 +22,9 @@ class GamePage extends Component {
             trackingGrid: []
           }
         }
-      }
+      },
+      selectedShip: '',
+      orientation: 'horizontal'
     }
     this.socket = io('http://localhost:3000/', { query: `user=${JSON.stringify(this.props.user)}` });
     this.socket.on('join', (data) => {
@@ -30,7 +32,7 @@ class GamePage extends Component {
     });
     this.socket.on('update game state', (data) =>{
       this.handleGameUpdate(data);
-    })
+    });
   }
 
   // Event Handlers
@@ -45,10 +47,42 @@ class GamePage extends Component {
     this.setState({game: gameState});
   }
 
-  handleTorpedoFire = (e) => {
-    let row = parseInt(e.target.getAttribute('data-row'), 10);
-    let col = parseInt(e.target.getAttribute('data-col'), 10);
+  handleTorpedoFire = (row, col) => {
     this.socket.emit('torpedo fire', {row, col} );
+  }
+
+  handleShipSelection = (ship) => {
+    this.setState({selectedShip: ship})
+  }
+
+  handleOrientationChange = () => {
+    this.setState({orientation: (this.state.orientation === 'horizontal' ? 'vertical' : 'horizontal')});
+  }
+
+  handleShipPlacement = (shipName, orientation, row, col) => {
+    let player = this.props.user.turnNo === 0 ? 'player1' : 'player2';
+    
+    if (this.checkIfPlacementIsInRange(shipName, orientation, row, col)) {
+      this.setState({selectedShip: ''}, () => {
+        this.socket.emit('place a ship', {shipName, orientation, row, col, player})
+      });
+    }
+  }
+
+  checkIfPlacementIsInRange = (shipName, orientation, row, col) => {
+    if (shipName) {
+      let length = this.state.game.shipTypes[shipName].length;
+
+      while (length > 0) {
+        if (col < 0 || row < 0 || col > 9 || row > 9) {
+          return false;
+        }
+        orientation === 'horizontal' ? col += 1 : row += 1;
+        length -= 1;
+      }
+      return true;
+    }
+    return false;
   }
 
   // Lifecycle methods
@@ -64,7 +98,7 @@ class GamePage extends Component {
           game={this.state.game}
         />
         <GameScreen
-          myPlayerData={this.props.user ? 
+          myGameData={this.props.user ? 
             (this.props.user._id === this.state.game.player1.id ? this.state.game.player1 : this.state.game.player2)
             :
             this.state.game.player1
@@ -73,6 +107,11 @@ class GamePage extends Component {
           socket={this.socket}
           user={this.props.user}
           handleTorpedoFire={this.handleTorpedoFire}
+          handleShipPlacement={this.handleShipPlacement}
+          handleShipSelection={this.handleShipSelection}
+          handleOrientationChange={this.handleOrientationChange}
+          selectedShip={this.state.selectedShip}
+          orientation={this.state.orientation}
         />
       </div>
     )
