@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import GameScreen from './../../components/GameScreen/GameScreen';
+import GameMessage from './../../components/GameMessage/GameMessage';
 const io = require('socket.io-client');
 
 class GamePage extends Component {
@@ -35,7 +36,8 @@ class GamePage extends Component {
   // Event Handlers
   handleGameJoin = (gameState) => {
     this.setState({game: gameState}, () => {
-      this.props.handleUserGameJoin(this.state.game.id);
+      let thisTurnNo = this.props.user._id === this.state.game.player1.id ? this.state.game.player1.turnNo : this.state.game.player2.turnNo;
+      this.props.handleUserGameJoin(this.state.game.id, thisTurnNo);
     });
   }
 
@@ -57,9 +59,10 @@ class GamePage extends Component {
   render() {
     return (
       <div className="container">
-        <div className="row">
-          <h1>Gameplay Screen</h1>
-        </div>
+        <GameMessage 
+          user={this.props.user}
+          game={this.state.game}
+        />
         <GameScreen
           myPlayerData={this.props.user ? 
             (this.props.user._id === this.state.game.player1.id ? this.state.game.player1 : this.state.game.player2)

@@ -36,14 +36,14 @@ io.on('connection', (socket) => {
       opponent = game.player1;
     }
 
-    // Check if the game actually exists
-    if (game) {
+    // Check if the game actually exists & is still going
+    if (game && !game.gameOver) {
       // Check if it is the shooting player's turn
       if (game.currentTurn === shootingPlayer.turnNo) {
         // Submit the shooting players shot
         if (game.fireTorpedo(row, col)) {
           // Shot was valid, check for a winner
-          if (game.checkForWinner()) {
+          if (game.checkForGameWinner()) {
             game.gameOver = true;
             game.winner = shootingPlayer.id;
           }

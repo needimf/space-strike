@@ -42,8 +42,11 @@ class App extends Component {
     this.props.history.push('/waiting-room');
   }
 
-  handleUserGameJoin = (gameId) => {
-    this.setState(prevState => prevState.user.currentGame = gameId);
+  handleUserGameJoin = (gameId, turnNo) => {
+    this.setState(prevState => ({
+      user: {...prevState.user, currentGame: gameId, turnNo}
+      })
+    );
   }
     
   /*---------- Lifecycle Methods ----------*/
