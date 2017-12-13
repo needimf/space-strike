@@ -5,10 +5,9 @@ import TrackingGrid from './../TrackingGrid/TrackingGrid';
 const Grids = (props) => {
   return (
     <div className="row">
-      <PrimaryGrid grid={props.playerGrids.primaryGrid} />
+      <PrimaryGrid grid={props.myGrids.primaryGrid} />
       <TrackingGrid 
-        grid={props.playerGrids.trackingGrid}
-        handleShot={props.handleShot}
+        grid={props.myGrids.trackingGrid}
       />
     </div>
   );

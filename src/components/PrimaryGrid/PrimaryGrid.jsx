@@ -9,7 +9,7 @@ const PrimaryGrid = (props) => {
        {
         row.map((cell, i) => {
           return (
-             <td key={`${index}${i}`} className={`primary-cell${cell ? ' ship' : ''}`}></td>
+             <td key={`${index}${i}`} className={`primary-cell${cell.ship ? ' ship' : ''}`}></td>
           );
         })
        }
@@ -18,7 +18,7 @@ const PrimaryGrid = (props) => {
   });
 
   return(
-    <div className="col-6">
+    <div className="col s6">
       <table>
         <tbody>
           {tableBody}

@@ -14,7 +14,6 @@ const TrackingGrid = (props) => {
               className={`tracking-cell${cell ? cell : ''}`}
               data-row={index}
               data-col={i}
-              onClick={(e) => {props.handleShot(e)}}
             />
           );
         })
@@ -24,7 +23,7 @@ const TrackingGrid = (props) => {
   });
 
   return(
-    <div className="col-6">
+    <div className="col s6">
       <table>
         <tbody>
           {tableBody}

@@ -1,13 +1,40 @@
+let PrimaryGridCell = require('./primaryGridCell');
+
 class Game {
   constructor(gameId, player1, player2) {
     this.id = gameId;
-    this.player1 = player1;
-    this.player2 = player2;
-    this.player1Grids = this.generateGameGrids();
-    this.player2Grids = this.generateGameGrids();
+    this.player1 = {
+      id: player1,
+      grids: this.generateGameGrids(),
+      ships: {},
+      turn: 0
+    };
+    this.player2 = {
+      id: player2,
+      grids: this.generateGameGrids(),
+      ships: {},
+      turn: 1
+    };
     this.turn = Math.floor(Math.random() * 2);
     this.gameOver = false;
     this.winner = null;
+    this.shipTypes = {
+      'Carrier': {
+        length: 5
+      },
+      'Battleship': {
+        length: 4
+      },
+      'Cruiser': {
+        length: 3
+      },
+      'Submarine': {
+        length: 3
+      },
+      'Destroyer': {
+        length: 2
+      }
+    }
   }
 
   generateGameGrids() {
@@ -15,33 +42,38 @@ class Game {
     let trackingGrid = primaryGrid.slice();
 
     function buildOutGrid(grid, fillValue) {
-      grid.forEach((row, rowIdx) => {
-        row = new Array(10).fill(fillValue);
-        grid[rowIdx] = row;
-      })
-      return grid;
+      if (fillValue) {
+        grid.forEach((row, rowIdx) => {
+          row = new Array(10).fill(null);
+          row = row.map(() => new fillValue());
+          grid[rowIdx] = row;
+        })
+        return grid;
+      } else {
+        grid.forEach((row, rowIdx) => {
+          row = new Array(10).fill(fillValue);
+          grid[rowIdx] = row;
+        })
+        return grid;
+      }
     }
 
-    primaryGrid = buildOutGrid(primaryGrid, 0);
+    primaryGrid = buildOutGrid(primaryGrid, PrimaryGridCell);
     trackingGrid = buildOutGrid(trackingGrid, null);
 
     return {primaryGrid, trackingGrid};
   }
   
   placeShipsForDevelopment(player) {
-    let primaryGrid = this[`player${player}Grids`].primaryGrid;
+    let primaryGrid = this[`player${player}`].grids.primaryGrid;
     let row = 0;
-    let ships = [5, 4, 3, 3, 2];
-
-    ships.forEach((ship, index) => {
-      let idx = 0
-      while (ship > 0) {
-        primaryGrid[row][idx] = ships[index];
-        idx += 1;
-        ship -= 1;
+    
+    for (let key in this.shipTypes) {
+      for (let i = 0; i < this.shipTypes[key].length; i++) {
+        primaryGrid[row][i].ship = key;
       }
       row += 2;
-    })
+    }
   }
 
 }

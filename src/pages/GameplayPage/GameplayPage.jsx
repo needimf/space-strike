@@ -5,21 +5,32 @@ const io = require('socket.io-client');
 class GameplayPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      game: {
+        player1: {
+          id: null,
+          grids: {
+            primaryGrid: [],
+            trackingGrid: []
+          }
+        },
+        player2: {
+          id: null,
+          grids: {
+            primaryGrid: [],
+            trackingGrid: []
+          }
+        }
+      }
+    }
     this.socket = io('http://localhost:3000/', { query: `user=${JSON.stringify(this.props.user)}` });
-    // this.socket.on('connect', () => {
-    //   this.socket.emit('add user to list', {user: this.props.user});
-    // });
-    this.socket.on('added', (data) => {
-      console.log(data);
-    })
     this.socket.on('join', (data) => {
-      console.log(data);
+      this.handleGameJoin(data);
     });
   }
 
-  handleButton = () => {
-    this.socket.emit('button');
+  handleGameJoin = (gameState) => {
+    this.setState({game: gameState});
   }
 
   componentWillUnmount() {
@@ -32,13 +43,16 @@ class GameplayPage extends Component {
         <div className="row">
           <h1>Gameplay Screen</h1>
         </div>
-        {/* <GameScreen 
-          playerOneTurn={this.props.playerOneTurn}
-          playerGrids={this.props.playerGrids}
-          gameOver={this.props.gameOver}
-          winner={this.props.winner}
-          handleShot={this.props.handleShot}
-        /> */}
+        <GameScreen
+          myPlayerData={this.props.user ? 
+            (this.props.user._id === this.state.game.player1.id ? this.state.game.player1 : this.state.game.player2)
+            :
+            this.state.game.player1
+          }
+          game={this.state.game}
+          socket={this.socket}
+          user={this.props.user}
+        />
       </div>
     )
   }

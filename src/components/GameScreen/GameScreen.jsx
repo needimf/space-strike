@@ -4,8 +4,9 @@ import Grids from './../Grids/Grids';
 const GameScreen = (props) => {
   return (
       <Grids 
-        playerGrids={props.playerGrids}
-        handleShot={props.handleShot}
+        myGrids={props.myPlayerData.grids}
+        game={props.game}
+        user={props.user}
       />
   );
 }
