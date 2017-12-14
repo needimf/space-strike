@@ -13,6 +13,7 @@ const GameScreen = (props) => {
         handleOrientationChange={props.handleOrientationChange}
         selectedShip={props.selectedShip}
         orientation={props.orientation}
+        checkIfValidPlacement={props.checkIfValidPlacement}
       />
   );
 }

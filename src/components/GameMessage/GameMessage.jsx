@@ -17,8 +17,8 @@ const GameMessage = (props) => {
   }
 
   return (
-    <div className="row">
-      <h1>{message}</h1>
+    <div className="grey lighten-1">
+      <h3 className="center-align white-text" style={{margin: '0 0 0.5rem', padding: '1.9466666667rem 0.5rem'}} >{message}</h3>
     </div>
   );
 }

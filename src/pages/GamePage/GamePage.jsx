@@ -101,7 +101,7 @@ class GamePage extends Component {
   handleShipPlacement = (shipName, orientation, row, col) => {
     let player = this.props.user.turnNo === 0 ? 'player1' : 'player2';
     
-    if (this.checkIfPlacementIsInRange(shipName, orientation, row, col)) {
+    if (this.checkIfValidPlacement(shipName, orientation, row, col, player)) {
       this.setState({selectedShip: ''}, () => {
         this.socket.emit('place a ship', {shipName, orientation, row, col, player})
       });
@@ -112,12 +112,14 @@ class GamePage extends Component {
     this.socket.emit('leave');
   }
 
-  checkIfPlacementIsInRange = (shipName, orientation, row, col) => {
+  checkIfValidPlacement = (shipName, orientation, row, col, player) => {
     if (shipName) {
       let length = this.state.game.shipTypes[shipName].length;
 
       while (length > 0) {
         if (col < 0 || row < 0 || col > 9 || row > 9) {
+          return false;
+        } else if (this.state.game[player].grids.primaryGrid[row][col].ship) {
           return false;
         }
         orientation === 'horizontal' ? col += 1 : row += 1;
@@ -135,27 +137,30 @@ class GamePage extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div>
         <GameMessage 
-          user={this.props.user}
-          game={this.state.game}
-        />
-        <GameScreen
-          myGameData={this.props.user ? 
-            (this.props.user._id === this.state.game.player1.id ? this.state.game.player1 : this.state.game.player2)
-            :
-            this.state.game.player1
-          }
-          game={this.state.game}
-          socket={this.socket}
-          user={this.props.user}
-          handleTorpedoFire={this.handleTorpedoFire}
-          handleShipPlacement={this.handleShipPlacement}
-          handleShipSelection={this.handleShipSelection}
-          handleOrientationChange={this.handleOrientationChange}
-          selectedShip={this.state.selectedShip}
-          orientation={this.state.orientation}
-        />
+            user={this.props.user}
+            game={this.state.game}
+          />
+        <div className="container">
+          <GameScreen
+            myGameData={this.props.user ? 
+              (this.props.user._id === this.state.game.player1.id ? this.state.game.player1 : this.state.game.player2)
+              :
+              this.state.game.player1
+            }
+            game={this.state.game}
+            socket={this.socket}
+            user={this.props.user}
+            handleTorpedoFire={this.handleTorpedoFire}
+            handleShipPlacement={this.handleShipPlacement}
+            handleShipSelection={this.handleShipSelection}
+            handleOrientationChange={this.handleOrientationChange}
+            selectedShip={this.state.selectedShip}
+            orientation={this.state.orientation}
+            checkIfValidPlacement={this.checkIfValidPlacement}
+          />
+        </div>
       </div>
     )
   }

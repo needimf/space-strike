@@ -1,0 +1,19 @@
+.ShipPlacementPanel-ship-selector {
+  display: flex; 
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.ShipPlacementPanel-ship {
+  border: solid 2px black;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px 20px;
+  width: 50%;
+}
+
+.ShipPlacementPanel-selected {
+  background-color: black;
+  color:#f5f5f5;
+}

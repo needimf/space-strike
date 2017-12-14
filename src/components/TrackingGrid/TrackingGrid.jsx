@@ -24,7 +24,8 @@ const TrackingGrid = (props) => {
   });
 
   return(
-    <div className="col s6">
+    <div className="col m6 s12">
+      <h5 className="center-align">Shooting Grid</h5>
       <table>
         <tbody>
           {tableBody}
