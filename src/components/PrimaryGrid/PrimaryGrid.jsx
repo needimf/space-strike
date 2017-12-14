@@ -43,7 +43,7 @@ const PrimaryGrid = (props) => {
               onMouseLeave={() => handleLeaveHover(rowIdx, colIdx)}
               id={`${rowIdx}${colIdx}`}
             >
-              <div className="PrimaryGrid-peg" />
+              <div className={`PrimaryGrid-peg${cell.sunk ? ' PrimaryGrid-sunk' : ''}${cell.hit ? ' PrimaryGrid-hit' : ''}${cell.miss ? ' PrimaryGrid-miss' : ''}`} />
             </td>
           );
         })

@@ -2,23 +2,34 @@ import React from 'react';
 
 const GameMessage = (props) => {
   let message = '';
+  let instructions = '';
   if (!props.user.currentGame) {
-    message = 'Waiting for another player...'
+    message = 'Waiting for another player...';
   } else {
     if (!(props.game.gameStatus === 'battle')) {
-      message = 'Place your ships'
+      message = 'Game starting up!';
+      instructions = 'Place your ships on the board';
     } else {
       if (!props.game.gameOver) {
-        message = props.game.currentTurn === props.user.turnNo ? 'Click on a cell to fire a torpedo!' : 'Waiting for opponent to fire torpedo...';
+        if (props.game.currentTurn === props.user.turnNo) {
+          message = 'Your turn!';
+          instructions = 'Click on a cell to fire a missile!';
+        } else {
+          message = "Opponent's turn!";
+          instructions = 'Brace for impact!';
+        }
       } else {
-        message = props.game.winner === props.user._id ? 'You defeated your opponent!' : 'You have been defeated...';
+        message = props.game.winner === props.user._id ? 'You won!' : 'You lost.';
       }
     }
   }
 
   return (
     <div className="grey lighten-1">
-      <h3 className="center-align white-text" style={{margin: '0 0 0.5rem', padding: '1.9466666667rem 0.5rem'}} >{message}</h3>
+      <div style={{margin: '0 0 0.5rem', padding: '1.9466666667rem 0.5rem'}}>
+        <h3 className="center-align white-text" style={{margin: '0 0 0.5rem'}} >{message}</h3>
+        <p className="center-align white-text" style={{margin: '0.5rem 0 0'}}>{instructions}</p>
+      </div>
     </div>
   );
 }

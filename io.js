@@ -54,7 +54,7 @@ io.on('connection', (socket) => {
       // Check if it is the shooting player's turn
       if (game.currentTurn === shootingPlayer.turnNo) {
         // Submit the shooting players shot
-        if (game.fireTorpedo(row, col)) {
+        if (game.fireMissile(row, col)) {
           // Shot was valid, check for a winner
           if (game.checkForGameWinner()) {
             game.gameOver = true;

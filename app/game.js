@@ -98,7 +98,7 @@ class Game {
   }
   
 
-  fireTorpedo(row, col) {
+  fireMissile(row, col) {
     let shootingPlayer,
       opponent;
 
