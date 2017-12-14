@@ -9,7 +9,6 @@ import userService from './../../utils/userService';
 import NavBar from './../../components/NavBar/NavBar';
 import GamePage from './../GamePage/GamePage';
 import WelcomePage from './../WelcomePage/WelcomePage';
-import WaitingRoomPage from './../WaitingRoomPage/WaitingRoomPage';
 import SignupPage from './../SignupPage/SignupPage';
 import LoginPage from './../LoginPage/LoginPage';
 
@@ -101,9 +100,6 @@ class App extends Component {
                 handleUserGameEnd={this.handleUserGameEnd}
               />}
               />
-            {/* <Route exact path='/waiting-room' render={(props) =>
-              <WaitingRoomPage />}
-            /> */}
           </Switch>
         </main>
         <footer></footer>

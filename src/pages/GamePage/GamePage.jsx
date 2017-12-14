@@ -26,7 +26,7 @@ class GamePage extends Component {
       selectedShip: '',
       orientation: 'horizontal'
     }
-    this.socket = window.io({ query: `user=${JSON.stringify(this.props.user)}` });
+    this.socket = window.io.connect({ query: `user=${JSON.stringify(this.props.user)}` });
     this.socket.on('join', (data) => {
       this.handleGameJoin(data);
     });
@@ -42,7 +42,7 @@ class GamePage extends Component {
   }
 
   // Event Handlers
-  handleGameJoin = (gameState, cb) => {
+  handleGameJoin = (gameState) => {
     this.setState({game: gameState}, () => {
       let thisTurnNo = this.props.user._id === this.state.game.player1.id ? this.state.game.player1.turnNo : this.state.game.player2.turnNo;
       this.props.handleUserGameJoin(this.state.game.id, thisTurnNo);
