@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import GameScreen from './../../components/GameScreen/GameScreen';
 import GameMessage from './../../components/GameMessage/GameMessage';
-const io = require('socket.io-client');
+// const io = require('socket.io-client');
 
 class GamePage extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class GamePage extends Component {
       selectedShip: '',
       orientation: 'horizontal'
     }
-    this.socket = io({ query: `user=${JSON.stringify(this.props.user)}` });
+    this.socket = window.io({ query: `user=${JSON.stringify(this.props.user)}` });
     this.socket.on('join', (data) => {
       this.handleGameJoin(data);
     });
