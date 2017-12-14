@@ -26,7 +26,7 @@ class GamePage extends Component {
       selectedShip: '',
       orientation: 'horizontal'
     }
-    this.socket = io('http://localhost:3000/', { query: `user=${JSON.stringify(this.props.user)}` });
+    this.socket = io({ query: `user=${JSON.stringify(this.props.user)}` });
     this.socket.on('join', (data) => {
       this.handleGameJoin(data);
     });
