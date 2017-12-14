@@ -171,6 +171,12 @@ class Game {
     return winner;
   }
 
+  forfeitGame(forfeitingPlayerId) {
+    let winningPlayer = this.player1.id === forfeitingPlayerId ? this.player2 : this.player1;
+    this.gameOver = true;
+    this.winner = winningPlayer;
+  }
+
 }
 
 module.exports = Game;

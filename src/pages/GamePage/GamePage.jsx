@@ -33,10 +33,16 @@ class GamePage extends Component {
     this.socket.on('update game state', (data) =>{
       this.handleGameUpdate(data);
     });
+    this.socket.on('opponent forfeited', (data) => {
+      this.handleOpponentForfeit(data);
+    });
+    this.socket.on('leave', () => {
+      this.handleGameEnd();
+    });
   }
 
   // Event Handlers
-  handleGameJoin = (gameState) => {
+  handleGameJoin = (gameState, cb) => {
     this.setState({game: gameState}, () => {
       let thisTurnNo = this.props.user._id === this.state.game.player1.id ? this.state.game.player1.turnNo : this.state.game.player2.turnNo;
       this.props.handleUserGameJoin(this.state.game.id, thisTurnNo);
@@ -47,12 +53,45 @@ class GamePage extends Component {
     this.setState({game: gameState});
   }
 
+  handleOpponentForfeit = (gameState) => {
+    this.setState({game: gameState}, () => {
+      this.socket.emit('leave');
+    })
+  }
+  
+  handleGameEnd = () => {
+    // fetch('/api/scores', {
+    //   method: 'PUT',
+    //   headers: {'Content-Type': 'application/json'},
+    //   body: {winner: (this.props.user._id === game.winner ? true : false)}
+    // }).then(res => res.json())
+    this.setState(prevState => ({
+      ...prevState,
+      game: {
+        player1: {
+          id: null,
+          grids: {
+            primaryGrid: [],
+            trackingGrid: []
+          }
+        },
+        player2: {
+          id: null,
+          grids: {
+            primaryGrid: [],
+            trackingGrid: []
+          }
+        }
+      }
+    }), () => this.props.handleUserGameEnd());
+  }
+
   handleTorpedoFire = (row, col) => {
     this.socket.emit('torpedo fire', {row, col} );
   }
 
   handleShipSelection = (ship) => {
-    this.setState({selectedShip: ship})
+    this.setState({selectedShip: ship});
   }
 
   handleOrientationChange = () => {
@@ -67,6 +106,10 @@ class GamePage extends Component {
         this.socket.emit('place a ship', {shipName, orientation, row, col, player})
       });
     }
+  }
+
+  handleForfeit = () => {
+    this.socket.emit('leave');
   }
 
   checkIfPlacementIsInRange = (shipName, orientation, row, col) => {

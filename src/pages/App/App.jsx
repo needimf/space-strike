@@ -48,9 +48,15 @@ class App extends Component {
       })
     );
   }
+
+  handleUserGameEnd = () => {
+    this.setState(prevState => ({
+      user: {...prevState.user, currentGame: null, turnNo: null}
+    }));
+  }
     
   /*---------- Lifecycle Methods ----------*/
-  componentDidMount() {
+  componentWillMount() {
     let user = userService.getUser();
     this.setState({user});
   }
@@ -92,6 +98,7 @@ class App extends Component {
                 handleShot={this.handleShot}
                 user={this.state.user}
                 handleUserGameJoin={this.handleUserGameJoin}
+                handleUserGameEnd={this.handleUserGameEnd}
               />}
               />
             {/* <Route exact path='/waiting-room' render={(props) =>

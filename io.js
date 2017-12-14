@@ -19,8 +19,21 @@ io.on('connection', (socket) => {
   // handle socket disconnect
   socket.on('disconnect', () => {
     console.log(`${new Date().toISOString()} ID ${socket.id} disconnected.`);      
+
+    leaveGame(socket);
+
     delete users[socket.id];
   });
+
+  // Handle leave game request
+  socket.on('leave', () => {
+    if(users[socket.id].currentGame !== null) {
+      leaveGame(socket);
+
+      socket.join('waiting room');
+      pairWaitingPlayers();
+    }
+  })
 
   // Handle torpedo fire
   socket.on('torpedo fire', ({row, col}) => {
@@ -107,6 +120,26 @@ function pairWaitingPlayers() {
     users[players[1].id].currentGame = game;
 
     console.log(`${new Date().toISOString()} ${JSON.stringify(users[players[0].id].firstName)} and ${JSON.stringify(users[players[1].id].firstName)} have joined game ID ${game.id}`);
+  }
+}
+
+function leaveGame(socket) {
+  if (users[socket.id].currentGame !== null) {
+    console.log(`${new Date().toISOString()} ${users[socket.id].firstName} has left game ID ${users[socket.id].currentGame.id}`);
+    let game = users[socket.id].currentGame;
+
+    // Notify opponent
+
+    if (!game.gameOver) {
+      // The game isn't over, this player is forfeiting
+      game.forfeitGame(users[socket.id].id);
+      io.to(`game ${game.id}`).emit('opponent forfeited', game);
+    }
+
+    socket.leave(`game ${game.id}`);
+
+    game = null;
+    io.to(socket.id).emit('leave');
   }
 }
 
