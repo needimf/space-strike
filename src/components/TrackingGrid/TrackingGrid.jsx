@@ -31,7 +31,7 @@ const TrackingGrid = (props) => {
               className={`TrackingGrid-cell`}
               data-row={rowIdx}
               data-col={colIdx}
-              onClick={() => props.handleTorpedoFire(rowIdx, colIdx)}
+              onClick={() => props.handleMissileFire(rowIdx, colIdx)}
               onMouseEnter={!cell ? () => handleCellHoverEnter(rowIdx, colIdx) : null}
               onMouseLeave={() => handleCellHoverLeave(rowIdx, colIdx)}
             >

@@ -86,8 +86,8 @@ class GamePage extends Component {
     }), () => this.props.handleUserGameEnd());
   }
 
-  handleTorpedoFire = (row, col) => {
-    this.socket.emit('torpedo fire', {row, col} );
+  handleMissileFire = (row, col) => {
+    this.socket.emit('missle fire', {row, col} );
   }
 
   handleShipSelection = (ship) => {
@@ -152,7 +152,7 @@ class GamePage extends Component {
             game={this.state.game}
             socket={this.socket}
             user={this.props.user}
-            handleTorpedoFire={this.handleTorpedoFire}
+            handleMissileFire={this.handleMissileFire}
             handleShipPlacement={this.handleShipPlacement}
             handleShipSelection={this.handleShipSelection}
             handleOrientationChange={this.handleOrientationChange}

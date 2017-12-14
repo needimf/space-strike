@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import {
   Switch,
-  Route
+  Route,
+  Redirect
 } from 'react-router-dom';
 import userService from './../../utils/userService';
 
@@ -76,30 +77,36 @@ class App extends Component {
                 user={this.state.user}
               />}
             />
-            <Route exact path='/signup' render={(props) => 
-              <SignupPage 
-                {...props}
-                handleSignup={this.handleSignup}
-              />}
-            />
+            <Route exact path='/signup' render={(props) => (
+              userService.getUser ? 
+                <Redirect to="/" />
+                  :
+                <SignupPage 
+                  {...props}
+                  handleSignup={this.handleSignup}
+                />
+            )}/>
             <Route exact path='/login' render={(props) => 
                 <LoginPage
                   {...props}
                   handleLogin={this.handleLogin}
                 />}
             />
-            <Route exact path='/battle' render={(props) => 
-              <GamePage 
-                playerOneTurn={this.state.playerOneTurn}
-                playerGrids={this.state.playerGrids}
-                gameOver={this.state.gameOver}
-                winner={this.state.winner}
-                handleShot={this.handleShot}
-                user={this.state.user}
-                handleUserGameJoin={this.handleUserGameJoin}
-                handleUserGameEnd={this.handleUserGameEnd}
-              />}
-              />
+            <Route exact path='/battle' render={(props) => ( 
+              userService.getUser() ?
+                <GamePage 
+                  playerOneTurn={this.state.playerOneTurn}
+                  playerGrids={this.state.playerGrids}
+                  gameOver={this.state.gameOver}
+                  winner={this.state.winner}
+                  handleShot={this.handleShot}
+                  user={this.state.user}
+                  handleUserGameJoin={this.handleUserGameJoin}
+                  handleUserGameEnd={this.handleUserGameEnd}
+                />
+                  :
+                <Redirect to='/login' />
+            )}/>
           </Switch>
         </main>
         <footer></footer>

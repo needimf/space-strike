@@ -35,8 +35,8 @@ io.on('connection', (socket) => {
     }
   })
 
-  // Handle torpedo fire
-  socket.on('torpedo fire', ({row, col}) => {
+  // Handle missile fire
+  socket.on('missile fire', ({row, col}) => {
     let game = users[socket.id].currentGame,
       shootingPlayer,
       opponent;
@@ -59,10 +59,12 @@ io.on('connection', (socket) => {
           if (game.checkForGameWinner()) {
             game.gameOver = true;
             game.winner = shootingPlayer.id;
-          }
+            io.to(`game ${game.id}`).emit('gameover', game);
+          } else {
           // switch current turn and send game state to both players
           game.currentTurn ? game.currentTurn = 0 : game.currentTurn = 1;
           io.to(`game ${game.id}`).emit('update game state', game);
+          }
         }
       }
     }

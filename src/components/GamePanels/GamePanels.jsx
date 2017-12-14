@@ -36,7 +36,7 @@ const GamePanels = (props) => {
       <div className="row">
         <TrackingGrid 
           grid={props.myGameData.grids.trackingGrid}
-          handleTorpedoFire={props.handleTorpedoFire}
+          handleMissileFire={props.handleMissileFire}
         />
         <PrimaryGrid 
           grid={props.myGameData.grids.primaryGrid}

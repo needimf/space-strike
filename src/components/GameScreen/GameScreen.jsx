@@ -7,7 +7,7 @@ const GameScreen = (props) => {
         myGameData={props.myGameData}
         game={props.game}
         user={props.user}
-        handleTorpedoFire={props.handleTorpedoFire}
+        handleMissileFire={props.handleMissileFire}
         handleShipPlacement={props.handleShipPlacement}
         handleShipSelection={props.handleShipSelection}
         handleOrientationChange={props.handleOrientationChange}
