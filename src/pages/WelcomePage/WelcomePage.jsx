@@ -25,18 +25,21 @@ class WelcomePage extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container WelcomePage-container">
         <div className="row">
           <div className ="col s12">
-            <h1 className="white-text">S P A C E &nbsp;&nbsp; S T R I K E</h1>
+            <h1 className="grey-text text-lighten-5 center-align">SPACE STRIKE</h1>
           </div>
         </div>
         <div className ="row">
-          <div className="col s6">
-            <Link className="btn" to="/battle">Play Game</Link>
-          </div>
-          <div className="col s6">
-            {/* <button className="btn" onClick={() => this.props.handleMultiplayerButton()}>Multiplayer</button> */}
+          <div className="col s12">
+            <div className="center-align">
+              {this.props.user ? 
+                <Link className="btn transparent center-align" to="/battle">Play Game</Link>
+                :
+                <Link className="btn transparent center-align" to="/login">Login</Link>
+              }
+            </div>
           </div>
         </div>
       </div>

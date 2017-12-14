@@ -62,7 +62,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div>
         <header>
           <NavBar 
             user={this.state.user}
@@ -73,7 +73,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/' render={(props) =>
               <WelcomePage
-                // handleMultiplayerButton={this.handleMultiplayerButton} 
+                user={this.state.user}
               />}
             />
             <Route exact path='/signup' render={(props) => 

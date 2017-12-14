@@ -13,13 +13,15 @@ class LoginPage extends Component {
 
   render () {
     return (
-      <div>
+      <div className="container">
         <LoginForm
           {...this.props}
           handleLogin={this.props.handleLogin}
           updateMessage={this.updateMessage}
         />
-        <p>{this.state.message}</p>
+        <div className="row">
+          <p className="center-align">{this.state.message}</p>
+        </div>
       </div>
     );
   }

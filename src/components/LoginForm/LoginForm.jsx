@@ -29,9 +29,9 @@ class LoginForm extends Component {
 
   render() {
     return (
-    <div className="container">
+    <div className="row">
       <div className="row">
-        <h1 className="col s12">Log In</h1>
+        <h1 className="col s12 center-align">Login</h1>
       </div>
       <div className="row">
         <form className="col s12" onSubmit={this.handleSubmit} >
@@ -48,8 +48,8 @@ class LoginForm extends Component {
             </div>
           </div>
           <div className="row">
-            <button type="submit" className="btn col s3">Log In</button>
-            <Link className="btn col s3 offset-s1" to='/'>Cancel</Link>
+            <button type="submit" className="btn col s3 grey darken-3">Log In</button>
+            <Link className="btn col s3 offset-s1 deep-orange accent-2" to='/'>Cancel</Link>
           </div>
         </form>
       </div>
