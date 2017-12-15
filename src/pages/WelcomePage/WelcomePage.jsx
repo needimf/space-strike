@@ -9,7 +9,9 @@ let styles = {
   }
 }
 class WelcomePage extends Component {
-  
+  constructor(props) {
+    super(props);
+  }
   // Lifecycle Methods
   componentWillMount() {
     for(let i in styles.body){
@@ -27,12 +29,10 @@ class WelcomePage extends Component {
     return (
       <div className="container WelcomePage-container">
         <div className="row">
-          <div className ="col s12">
-            <h1 className="grey-text text-lighten-5 center-align">SPACE STRIKE</h1>
-          </div>
+          <h1 className="grey-text text-lighten-5 center-align">SPACE STRIKE</h1>
         </div>
-        <div className ="row">
-          <div className="col s12">
+        <div className="row valign-wrapper">
+          <div className ="col s12 m8">
             <div className="center-align">
               {this.props.user ? 
                 <Link className="btn transparent center-align" to="/battle">Play Game</Link>
@@ -41,6 +41,17 @@ class WelcomePage extends Component {
               }
             </div>
           </div>
+          {this.props.user ?
+            <div className="col s12 m4">
+              <h4 className="center-align grey-text text-lighten-5">Stats</h4>
+              <p className="center-align grey-text text-lighten-5">Wins: {this.props.user.wins}</p>
+              <p className="center-align grey-text text-lighten-5">Losses: {this.props.user.totalGames - this.props.user.wins}</p>
+            </div>
+            :
+            <div className="col s12 m4">
+              <h4 className="center-align grey-text text-lighten-5">Join the fun</h4>
+            </div>
+          }
         </div>
       </div>
     );

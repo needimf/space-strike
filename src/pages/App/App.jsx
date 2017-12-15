@@ -49,10 +49,8 @@ class App extends Component {
     );
   }
 
-  handleUserGameEnd = () => {
-    this.setState(prevState => ({
-      user: {...prevState.user, currentGame: null, turnNo: null}
-    }));
+  handleUserGameEnd = (user) => {
+      this.setState({user});
   }
     
   /*---------- Lifecycle Methods ----------*/
@@ -77,15 +75,12 @@ class App extends Component {
                 user={this.state.user}
               />}
             />
-            <Route exact path='/signup' render={(props) => (
-              userService.getUser ? 
-                <Redirect to="/" />
-                  :
-                <SignupPage 
-                  {...props}
-                  handleSignup={this.handleSignup}
-                />
-            )}/>
+            <Route exact path='/signup' render={(props) => 
+              <SignupPage 
+                {...props}
+                handleSignup={this.handleSignup}
+              />}
+            />
             <Route exact path='/login' render={(props) => 
                 <LoginPage
                   {...props}

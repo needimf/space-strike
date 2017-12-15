@@ -3,6 +3,7 @@ const io = require('socket.io')();
 
 // require app's game logic and constructors
 let Game = require('./app/game');
+let User = require('./models/user');
 
 // initialize users and gameIdGenerator
 let users = {};
@@ -59,12 +60,10 @@ io.on('connection', (socket) => {
           if (game.checkForGameWinner()) {
             game.gameOver = true;
             game.winner = shootingPlayer.id;
-            io.to(`game ${game.id}`).emit('gameover', game);
-          } else {
+          }
           // switch current turn and send game state to both players
           game.currentTurn ? game.currentTurn = 0 : game.currentTurn = 1;
           io.to(`game ${game.id}`).emit('update game state', game);
-          }
         }
       }
     }
@@ -130,18 +129,27 @@ function leaveGame(socket) {
     console.log(`${new Date().toISOString()} ${users[socket.id].firstName} has left game ID ${users[socket.id].currentGame.id}`);
     let game = users[socket.id].currentGame;
 
-    // Notify opponent
-
+    
     if (!game.gameOver) {
       // The game isn't over, this player is forfeiting
-      game.forfeitGame(users[socket.id].id);
+      game.forfeitGame(users[socket.id]._id);
+      // Notify opponent
       io.to(`game ${game.id}`).emit('opponent forfeited', game);
     }
 
-    socket.leave(`game ${game.id}`);
+    let updates = users[socket.id]._id === game.winner.id ? { $inc: {wins: 1, totalGames: 1}} : { $inc: {totalGames: 1}};
 
-    game = null;
-    io.to(socket.id).emit('leave');
+    User.findByIdAndUpdate(users[socket.id]._id, updates).then(user => {
+      socket.leave(`game ${game.id}`);
+      let gameId = game.id
+      game = null;
+      io.to(socket.id).emit('leave', {user, gameId});
+    }).catch(err => {
+      socket.leave(`game ${game.id}`);
+  
+      game = null;
+      io.to(socket.id).emit('leave');
+    })
   }
 }
 

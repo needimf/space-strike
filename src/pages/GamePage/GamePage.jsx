@@ -24,20 +24,26 @@ class GamePage extends Component {
         }
       },
       selectedShip: '',
-      orientation: 'horizontal'
+      orientation: 'horizontal',
+      forfeitMsg: ''
     }
     this.socket = window.io.connect({ query: `user=${JSON.stringify(this.props.user)}` });
     this.socket.on('join', (data) => {
+      // while (this.props.user.currentGame) {
+      //   console.log('waiting');  
+      // }
       this.handleGameJoin(data);
     });
     this.socket.on('update game state', (data) =>{
       this.handleGameUpdate(data);
     });
     this.socket.on('opponent forfeited', (data) => {
+      // alert('Your opponent forfeited! Click ok to find a worthy adversary. ');
+      // document.getElementById('instructions-message').innerHTML = '<h5>Your opponent forfeited, looking for a worthy adversary</h5>';
       this.handleOpponentForfeit(data);
     });
-    this.socket.on('leave', () => {
-      this.handleGameEnd();
+    this.socket.on('leave', (data) => {
+      this.handleGameEnd(data.user, data.gameId);
     });
   }
 
@@ -54,40 +60,41 @@ class GamePage extends Component {
   }
 
   handleOpponentForfeit = (gameState) => {
-    this.setState({game: gameState}, () => {
+    this.setState({game: gameState, forfeitMsg: 'Your opponent forfeited, looking for a worthy adversary'}, () => {
       this.socket.emit('leave');
     })
   }
+
+  handlePlayAgain = () => {
+    this.socket.emit('leave');
+  }
   
-  handleGameEnd = () => {
-    // fetch('/api/scores', {
-    //   method: 'PUT',
-    //   headers: {'Content-Type': 'application/json'},
-    //   body: {winner: (this.props.user._id === game.winner ? true : false)}
-    // }).then(res => res.json())
-    this.setState(prevState => ({
-      ...prevState,
-      game: {
-        player1: {
-          id: null,
-          grids: {
-            primaryGrid: [],
-            trackingGrid: []
-          }
-        },
-        player2: {
-          id: null,
-          grids: {
-            primaryGrid: [],
-            trackingGrid: []
+  handleGameEnd = (user, prevGameId) => {
+    if (this.props.user.currentGame === prevGameId) {
+      this.setState(prevState => ({
+        ...prevState,
+        game: {
+          player1: {
+            id: null,
+            grids: {
+              primaryGrid: [],
+              trackingGrid: []
+            }
+          },
+          player2: {
+            id: null,
+            grids: {
+              primaryGrid: [],
+              trackingGrid: []
+            }
           }
         }
-      }
-    }), () => this.props.handleUserGameEnd());
+      }), () => this.props.handleUserGameEnd(user, prevGameId));
+    }
   }
 
   handleMissileFire = (row, col) => {
-    this.socket.emit('missle fire', {row, col} );
+    this.socket.emit('missile fire', {row, col} );
   }
 
   handleShipSelection = (ship) => {
@@ -141,6 +148,7 @@ class GamePage extends Component {
         <GameMessage 
             user={this.props.user}
             game={this.state.game}
+            handlePlayAgain={this.handlePlayAgain}
           />
         <div className="container">
           <GameScreen
