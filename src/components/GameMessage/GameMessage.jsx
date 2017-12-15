@@ -42,6 +42,7 @@ const GameMessage = (props) => {
         <h3 className="center-align white-text" style={{margin: '0 0 0.5rem'}} >{message}</h3>
         <div id="instructions-message" style={{margin: '0', padding: '0'}}>
           {instructions}
+          {props.forfeitMsg && <p className="center-align white-text" style={{margin: '0.5rem 0 0'}}>{props.forfeitMsg}</p>}
         </div>
       </div>
     </div>

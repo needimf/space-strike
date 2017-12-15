@@ -29,9 +29,6 @@ class GamePage extends Component {
     }
     this.socket = window.io.connect({ query: `user=${JSON.stringify(this.props.user)}` });
     this.socket.on('join', (data) => {
-      // while (this.props.user.currentGame) {
-      //   console.log('waiting');  
-      // }
       this.handleGameJoin(data);
     });
     this.socket.on('update game state', (data) =>{
@@ -56,7 +53,7 @@ class GamePage extends Component {
   }
 
   handleGameUpdate = (gameState) => {
-    this.setState({game: gameState});
+    this.setState({game: gameState, forfeitMsg: ''});
   }
 
   handleOpponentForfeit = (gameState) => {
@@ -149,6 +146,7 @@ class GamePage extends Component {
             user={this.props.user}
             game={this.state.game}
             handlePlayAgain={this.handlePlayAgain}
+            forfeitMsg={this.state.forfeitMsg}
           />
         <div className="container">
           <GameScreen
