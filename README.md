@@ -1,4 +1,4 @@
-<img src="https://i.imgur.com/76UsICa.png" alt="Space Strike logo" style="max-width: 7%;"/>
+<img src="https://i.imgur.com/pJqB2pt.png" alt="Space Strike logo" style="max-width: 7%;"/>
 
 # Space Strike
 
@@ -41,8 +41,9 @@ User stories and planning documents can be found at: [Space Strike Planning Boar
 1. Clone the repo from your terminal ```git clone https://github.com/needimf/space-strike.git```
 2. Install npm packages with ```npm install```
 3. Create a .env file and provide database and token secret environment variables
-4. Run the node.js sever with ```nodemon server.js```
+4. Run the node.js sever with ```node server.js``` or ```nodemon server.js``` if you have nodemon installed
 5. Run react with ```npm start```
+6. Browse to ```http://localhost:3000``` and enjoy the game!
 
 
 ### OR
@@ -53,7 +54,8 @@ Play online here: https://spacestrike.herokuapp.com/
 
 ## Future Steps
 
-- Implementing in-game chat functionality
-- Providing a "Current Games" page that allows users to see the stats of games in progress at the time
-- Allowing users to save a game for future play
-- Updating responsive design for mobile users
+- Implement in-game chat functionality
+- Change game forfeit handling to allow the winning player the option of playing a new game or not
+- Provide a "Current Games" page that allows users to see the stats of games in progress at the time
+- Allow users to save a game for future play
+- Update responsive design for mobile users
