@@ -9,4 +9,15 @@ body {
   font-family: sans-serif;
   min-height: 100%;
   min-width: 100%;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+#root {
+  flex: 1 0 auto;
+}
+
+.page-footer {
+  padding-top: 0 !important;
 }

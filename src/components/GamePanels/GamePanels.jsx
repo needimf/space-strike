@@ -6,7 +6,7 @@ import ShipPlacementPanel from './../ShipPlacementPanel/ShipPlacementPanel';
 const GamePanels = (props) => {
   let panels = 
     <div className="row">
-      <h3 className="center-align">Prepare for Takeoff!</h3>
+      <h3 className="center-align grey-text text-darken-4">Prepare for Takeoff!</h3>
       <div className="center-align">
         <img className="responsive-img center-align" src="https://i.imgur.com/pJqB2pt.png" alt="Space Strike logo" />
       </div>

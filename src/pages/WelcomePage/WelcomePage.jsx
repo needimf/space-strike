@@ -9,9 +9,6 @@ let styles = {
   }
 }
 class WelcomePage extends Component {
-  constructor(props) {
-    super(props);
-  }
   // Lifecycle Methods
   componentWillMount() {
     for(let i in styles.body){
@@ -41,10 +38,10 @@ class WelcomePage extends Component {
                 <Link className="btn-large btn grey darken-4 center-align" to="/battle">Play Game</Link>
               </div>
             </div>
-            <div class="col s12 m4">
-              <div class="card grey darken-4">
-                <div class="card-content white-text">
-                  <span class="card-title center-align">{this.props.user.firstName}'s Stats</span>
+            <div className="col s12 m4">
+              <div className="card grey darken-4">
+                <div className="card-content white-text">
+                  <span className="card-title center-align">{this.props.user.firstName}'s Stats</span>
                   <p className="center-align grey-text text-lighten-5">Wins: {this.props.user.wins}</p>
                   <p className="center-align grey-text text-lighten-5">Losses: {this.props.user.totalGames - this.props.user.wins}</p>
                 </div>

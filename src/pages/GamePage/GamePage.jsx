@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import GameScreen from './../../components/GameScreen/GameScreen';
 import GameMessage from './../../components/GameMessage/GameMessage';
-// const io = require('socket.io-client');
 
 class GamePage extends Component {
   constructor(props) {
@@ -57,7 +56,7 @@ class GamePage extends Component {
   }
 
   handleOpponentForfeit = (gameState) => {
-    this.setState({game: gameState, forfeitMsg: 'Your opponent forfeited, looking for a worthy adversary'}, () => {
+    this.setState({game: gameState, forfeitMsg: 'Your last opponent forfeited, you have been awarded a win'}, () => {
       this.socket.emit('leave');
     })
   }
