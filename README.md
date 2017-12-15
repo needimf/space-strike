@@ -16,6 +16,12 @@ Space Strike is an interstellar rendition of the classic game, Battleship! Playe
 
 ---
 
+<img src="https://i.imgur.com/ZVCQRwX.png"
+     alt="Space Strike gameplay"
+     style="margin: 0 auto; max-width: 80%;" />
+
+---
+
 ## Technologies Used
 
 - React
@@ -40,7 +46,11 @@ User stories and planning documents can be found at: [Space Strike Planning Boar
 
 1. Clone the repo from your terminal ```git clone https://github.com/needimf/space-strike.git```
 2. Install npm packages with ```npm install```
-3. Create a .env file and provide database and token secret environment variables
+3. Create a .env file for local development with the following keys: 
+```javascript
+DATABASE_URL=<your database url>
+SECRET=<your JWT secret>
+```
 4. Run the node.js sever with ```node server.js``` or ```nodemon server.js``` if you have nodemon installed
 5. Run react with ```npm start```
 6. Browse to ```http://localhost:3000``` and enjoy the game!

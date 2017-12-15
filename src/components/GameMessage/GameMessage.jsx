@@ -17,7 +17,7 @@ const GameMessage = (props) => {
           instructions = <p className="center-align grey-text text-darken-3" style={{margin: '0.5rem 0 0'}}>Click on a cell to fire a missile!</p>
         } else {
           message = "Opponent's turn!";
-          instructions = <p className="center-align grey-text text-lighten-2" style={{margin: '0.5rem 0 0'}}>Brace for impact!</p>
+          instructions = <p className="center-align grey-text text-darken-3" style={{margin: '0.5rem 0 0'}}>Brace for impact!</p>
         }
       } else {
         message = props.game.winner === props.user._id ? 'You won!' : 'You lost.';
