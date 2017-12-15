@@ -22,19 +22,19 @@ class Game {
     this.winner = null;
     this.gameStatus = 'begin';
     this.shipTypes = {
-      'Carrier': {
+      'Space Station': {
         length: 5
       },
-      'Battleship': {
+      'Shuttle': {
         length: 4
       },
-      'Cruiser': {
+      'Voyager': {
         length: 3
       },
-      'Submarine': {
+      'Rocket': {
         length: 3
       },
-      'Destroyer': {
+      'Satellite': {
         length: 2
       }
     }

@@ -6,12 +6,15 @@ import ShipPlacementPanel from './../ShipPlacementPanel/ShipPlacementPanel';
 const GamePanels = (props) => {
   let panels = 
     <div className="row">
-      <h6>We hope to pair you up soon!</h6>
+      <h3 className="center-align">Prepare for Takeoff!</h3>
+      <div className="center-align">
+        <img className="responsive-img center-align" src="https://i.imgur.com/pJqB2pt.png" alt="Space Strike logo" />
+      </div>
     </div>;
   if (props.game.gameStatus) {
     if (props.game.gameStatus === 'begin') {
       panels = 
-        <div className="row">
+        <div className="row valign-wrapper">
           <ShipPlacementPanel 
             ships={props.game.shipTypes}
             placedShips={props.myGameData.placedShips}

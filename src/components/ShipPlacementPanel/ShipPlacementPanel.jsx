@@ -8,8 +8,7 @@ const ShipPlacementPanel = (props) => {
       shipsToPlace.push(ship);
     }
   }
-  shipsToPlace = shipsToPlace.length > 0 ?
-    shipsToPlace.map((ship, idx) => {
+  shipsToPlace = shipsToPlace.map((ship, idx) => {
       return (
         <div 
           key={idx} 
@@ -19,25 +18,28 @@ const ShipPlacementPanel = (props) => {
           {ship}
         </div>
       )
-    })
-    :
-    <p>Waiting on other player to place their ships..</p>;
+    });
 
   return (
-    <div className="col m6 s12" >
-      <h5 className="center-align">Ships</h5>
-      <div className="row ShipPlacementPanel-ship-selector">
-        {shipsToPlace}
-      </div>
-      <div className="row">
-        <h6 className="center-align">Orientation | {props.orientation.toUpperCase()}</h6>
-      </div>
-      <div className="row">
-        <div className="center-align">
-          <button className="btn grey darken-2 grey-text text-lighten-4 " onClick={() => props.handleOrientationChange()} >Rotate Ship</button>
+    shipsToPlace.length > 0 ? 
+      <div className="col m6 s12" >
+        <h5 className="center-align">Ships</h5>
+        <div className="row ShipPlacementPanel-ship-selector">
+          {shipsToPlace}
+        </div>
+        <div className="row">
+          <h6 className="center-align">Orientation | {props.orientation.toUpperCase()}</h6>
+        </div>
+        <div className="row">
+          <div className="center-align">
+            <button className="btn grey darken-2 grey-text text-lighten-4 " onClick={() => props.handleOrientationChange()} >Rotate Ship</button>
+          </div>
         </div>
       </div>
-    </div>
+      :
+      <div className="col m6 s12" >
+        <h5>Awesome! Waiting for other player..</h5>
+      </div>
   );
 }
 

@@ -37,10 +37,10 @@ const GameMessage = (props) => {
   }
 
   return (
-    <div className="grey lighten-1">
+    <div id="message-bar" className="grey lighten-1">
       <div style={{margin: '0 0 0.5rem', padding: '1.9466666667rem 0.5rem 1rem'}}>
-        <h3 className="center-align white-text" style={{margin: '0 0 0.5rem'}} >{message}</h3>
-        <div id="instructions-message" style={{margin: '0', padding: '0'}}>
+        <h3 id="message-header" className="center-align white-text" style={{margin: '0 0 0.5rem'}} >{message}</h3>
+        <div id="message-instructions" style={{margin: '0', padding: '0'}}>
           {instructions}
           {props.forfeitMsg && <p className="center-align white-text" style={{margin: '0.5rem 0 0'}}>{props.forfeitMsg}</p>}
         </div>

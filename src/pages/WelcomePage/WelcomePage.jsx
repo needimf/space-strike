@@ -31,28 +31,35 @@ class WelcomePage extends Component {
         <div className="row">
           <h1 className="grey-text text-lighten-5 center-align">SPACE STRIKE</h1>
         </div>
-        <div className="row valign-wrapper">
-          <div className ="col s12 m8">
-            <div className="center-align">
-              {this.props.user ? 
-                <Link className="btn transparent center-align" to="/battle">Play Game</Link>
-                :
-                <Link className="btn transparent center-align" to="/login">Login</Link>
-              }
+        <div className="row center-align">
+          <img className="responsive-img" src="https://i.imgur.com/pJqB2pt.png" alt="Space Strike logo" />
+        </div>
+        {this.props.user ? 
+          <div className="row valign-wrapper">
+            <div className ="col s12 m8">
+              <div className="center-align">
+                <Link className="btn-large btn grey darken-4 center-align" to="/battle">Play Game</Link>
+              </div>
+            </div>
+            <div class="col s12 m4">
+              <div class="card grey darken-4">
+                <div class="card-content white-text">
+                  <span class="card-title center-align">{this.props.user.firstName}'s Stats</span>
+                  <p className="center-align grey-text text-lighten-5">Wins: {this.props.user.wins}</p>
+                  <p className="center-align grey-text text-lighten-5">Losses: {this.props.user.totalGames - this.props.user.wins}</p>
+                </div>
+              </div>
             </div>
           </div>
-          {this.props.user ?
-            <div className="col s12 m4">
-              <h4 className="center-align grey-text text-lighten-5">Stats</h4>
-              <p className="center-align grey-text text-lighten-5">Wins: {this.props.user.wins}</p>
-              <p className="center-align grey-text text-lighten-5">Losses: {this.props.user.totalGames - this.props.user.wins}</p>
+          :
+          <div className="row valign-wrapper">
+            <div className ="col s12">
+              <div className="center-align">
+                <Link className="btn-large btn grey darken-4 center-align" to="/login">Login</Link>
+              </div>
             </div>
-            :
-            <div className="col s12 m4">
-              <h4 className="center-align grey-text text-lighten-5">Join the fun</h4>
-            </div>
-          }
-        </div>
+          </div>
+        }
       </div>
     );
   }
