@@ -26,10 +26,10 @@
   background-color: #b71c1c !important;
 }
 
-.TrackingGrid-cell-hover {
+.TrackingGrid-cell:hover {
   background-color: #757575 !important;
 }
 
-.TrackingGrid-table-hover {
-  cursor: url('https://i.imgur.com/tWutd5M.png'), crosshair;
+#tracking-grid:hover {
+  cursor: crosshair;
 }

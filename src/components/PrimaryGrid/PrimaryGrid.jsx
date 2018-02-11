@@ -16,7 +16,6 @@ const PrimaryGrid = (props) => {
               onClick={props.handleShipPlacement ? () => props.handleShipPlacement(props.selectedShip, props.orientation, rowIdx, colIdx) : null}
               onMouseEnter={props.handleShipPlacement ? () => props.handlePrimaryGridCellHover(rowIdx, colIdx) : null }
               onMouseLeave={props.handleShipPlacement ? () => props.handlePrimaryGridCellLeaveHover(rowIdx, colIdx) : null }
-              id={`${rowIdx}${colIdx}`}
             >
               <div className={`PrimaryGrid-peg${cell.sunk ? ' PrimaryGrid-sunk' : ''}${cell.hit ? ' PrimaryGrid-hit' : ''}${cell.miss ? ' PrimaryGrid-miss' : ''}`} />
             </td>

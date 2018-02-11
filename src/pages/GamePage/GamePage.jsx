@@ -136,7 +136,7 @@ class GamePage extends Component {
     return false;
   }
 
-  // Grid interacation event handlers
+  // Grid interaction event handlers
 
   handlePrimaryGridCellHover = (row, col) => {
     if (this.state.selectedShip) {
@@ -153,7 +153,7 @@ class GamePage extends Component {
         this.setState(prevState => {
           let newState = {...prevState};
           newState.game[player].grids.primaryGrid = primaryGridCopy;
-          return newState
+          return newState;
         });
       }
     }
@@ -173,7 +173,7 @@ class GamePage extends Component {
       this.setState(prevState => {
         let newState = {...prevState};
         newState.game[player].grids.primaryGrid = primaryGridCopy;
-        return newState
+        return newState;
       });
     }
   }
