@@ -14,6 +14,8 @@ const GameScreen = (props) => {
         selectedShip={props.selectedShip}
         orientation={props.orientation}
         checkIfValidPlacement={props.checkIfValidPlacement}
+        handlePrimaryGridCellHover={props.handlePrimaryGridCellHover}
+        handlePrimaryGridCellLeaveHover={props.handlePrimaryGridCellLeaveHover}
       />
   );
 }

@@ -32,6 +32,8 @@ const GamePanels = (props) => {
             checkIfValidPlacement={props.checkIfValidPlacement}
             ships={props.game.shipTypes}
             user={props.user}
+            handlePrimaryGridCellHover={props.handlePrimaryGridCellHover}
+            handlePrimaryGridCellLeaveHover={props.handlePrimaryGridCellLeaveHover}
           />
         </div>;
     } else {

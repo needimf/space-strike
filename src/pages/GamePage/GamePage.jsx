@@ -43,7 +43,10 @@ class GamePage extends Component {
     });
   }
 
-  // Event Handlers
+  /*--------Event Handlers------------*/
+
+  // Game play related events handlers
+
   handleGameJoin = (gameState) => {
     this.setState({game: gameState}, () => {
       let thisTurnNo = this.props.user._id === this.state.game.player1.id ? this.state.game.player1.turnNo : this.state.game.player2.turnNo;
@@ -133,7 +136,49 @@ class GamePage extends Component {
     return false;
   }
 
-  // Lifecycle methods
+  // Grid interacation event handlers
+
+  handlePrimaryGridCellHover = (row, col) => {
+    if (this.state.selectedShip) {
+      let player = this.props.user.turnNo === 0 ? 'player1' : 'player2';
+      let length = this.state.game.shipTypes[this.state.selectedShip].length;
+      let primaryGridCopy = [...this.state.game[player].grids.primaryGrid]
+
+      if (this.checkIfValidPlacement(this.state.selectedShip, this.state.orientation, row, col, player)) {
+        while (length > 0) {
+          primaryGridCopy[row][col].hover = true;
+          this.state.orientation === 'horizontal' ? col += 1 : row += 1;
+          length -= 1;
+        }
+        this.setState(prevState => {
+          let newState = {...prevState};
+          newState.game[player].grids.primaryGrid = primaryGridCopy;
+          return newState
+        });
+      }
+    }
+  }
+
+  handlePrimaryGridCellLeaveHover = (row, col) => {
+    if (this.state.selectedShip) {
+      let player = this.props.user.turnNo === 0 ? 'player1' : 'player2';
+      let length = this.state.game.shipTypes[this.state.selectedShip].length;
+      let primaryGridCopy = [...this.state.game[player].grids.primaryGrid]
+
+      while (length > 0 && col < 10 && row < 10) {
+        primaryGridCopy[row][col].hover = false;
+        this.state.orientation === 'horizontal' ? col += 1 : row += 1;
+        length -= 1;
+      }
+      this.setState(prevState => {
+        let newState = {...prevState};
+        newState.game[player].grids.primaryGrid = primaryGridCopy;
+        return newState
+      });
+    }
+  }
+
+  /*--------Lifecycle Methods------------*/
   componentWillUnmount() {
     this.socket.close();
   }
@@ -164,6 +209,8 @@ class GamePage extends Component {
             selectedShip={this.state.selectedShip}
             orientation={this.state.orientation}
             checkIfValidPlacement={this.checkIfValidPlacement}
+            handlePrimaryGridCellHover={this.handlePrimaryGridCellHover}
+            handlePrimaryGridCellLeaveHover={this.handlePrimaryGridCellLeaveHover}
           />
         </div>
       </div>
